@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gregory S. Crawford | Lachlan Deer</title>
+    <link>/author/gregory-s.-crawford/</link>
+      <atom:link href="/author/gregory-s.-crawford/index.xml" rel="self" type="application/rss+xml" />
+    <description>Gregory S. Crawford</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Thu, 31 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>Gregory S. Crawford</title>
+      <link>/author/gregory-s.-crawford/</link>
+    </image>
+    
+    <item>
+      <title>How does Advertising Influence Online Word of Mouth? Evidence from Twitter</title>
+      <link>/publication/ads-tweets-movies/</link>
+      <pubDate>Thu, 31 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/ads-tweets-movies/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Online Word of Mouth and the Performance of New Products</title>
+      <link>/publication/online-wom-new-product-performance/</link>
+      <pubDate>Thu, 31 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/online-wom-new-product-performance/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>The Regulation of Public Service Broadcasters - Should there be more advertising on television?</title>
+      <link>/publication/psb-ads/</link>
+      <pubDate>Wed, 10 May 2017 00:00:00 +0000</pubDate>
+      <guid>/publication/psb-ads/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

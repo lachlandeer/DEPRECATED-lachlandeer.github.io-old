@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Experiment | Lachlan Deer</title>
+    <link>/tag/experiment/</link>
+      <atom:link href="/tag/experiment/index.xml" rel="self" type="application/rss+xml" />
+    <description>Experiment</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Mon, 02 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>Experiment</title>
+      <link>/tag/experiment/</link>
+    </image>
+    
+    <item>
+      <title>Gender Effects for Loss Aversion - Yes, No, Maybe?</title>
+      <link>/publication/gender-loss-aversion/</link>
+      <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/gender-loss-aversion/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

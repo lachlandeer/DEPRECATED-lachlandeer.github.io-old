@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Teachings | Lachlan Deer</title>
+    <link>/teaching/</link>
+      <atom:link href="/teaching/index.xml" rel="self" type="application/rss+xml" />
+    <description>Teachings</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>Teachings</title>
+      <link>/teaching/</link>
+    </image>
+    
+    <item>
+      <title>Research In Social Media</title>
+      <link>/teaching/tilburg-rsm/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      <guid>/teaching/tilburg-rsm/</guid>
+      <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Tilburg, Spring 2021&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;&amp;ldquo;Some 73% of online adults now use a social networking site of some kind&amp;hellip; [and] 42% of online adults now use multiple social networking sites,&amp;rdquo; according to a recent Pew Research survey.^[
+Pew Research, 2019, 
+&lt;a href=&#34;https://www.pewresearch.org/internet/fact-sheet/social-media/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Social Media Fact Sheet.&lt;/a&gt;
+]
+If a business needs to be where its customers are, then establishing a strong presence on social media is a critical component of a modern marketing strategy.
+The goal of this course is to develop an understanding of the social media landscape from the point of view of a marketing analyst.
+To that end, we need to be able to answer the following questions:
+How does one develop an online reputation or develop their brand online?
+How does one maintain a strong user community on social networking sites?
+How can one craft a potent social advertising strategy?
+What are the potential pitfalls?
+How does one quantitatively assess whether their online reputation is positive and/or improving, or whether their social marketing is effective?&lt;/p&gt;
+&lt;p&gt;To answer these questions, we must synthesize knowledge from a variety of disciplines.
+Sociologists have researched such concepts as homophily and social capital, which point to the underlying motivations in the relationships of individuals in a social network,
+computer scientists have uncovered surprising patterns in real-world social networks,
+and marketing experts have studied how network structure influences consumer demand, what makes ads go &amp;lsquo;viral&amp;rsquo; and aspects of social advertising.
+This course will combine this foundational material with actual case studies of businesses in the social world to build an understanding of modern social media marketing.
+As we progress through the course a heavy emphasis on analytical techniques - both statistical and theoretical - will guide our understanding and allow us to draw conclusions from data to answer the questions posed above.&lt;/p&gt;
+&lt;p&gt;The course is split into four modules:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Network Patterns:&lt;/strong&gt; which seeks to describes and explain several common patterns found in real-world social networks,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Branding and Community:&lt;/strong&gt; which explores the best practice methods for maintaining a strong brand online and managing the user community,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Importance and Influence:&lt;/strong&gt; which discusses an individual&amp;rsquo;s place in the network, and how memes, early adoption, word of mouth and other &amp;lsquo;information cascades&amp;rsquo; propagate,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advertising and Marketing:&lt;/strong&gt; which focuses on viral marketing and social advertising techniques.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Programming Practices for Research Students</title>
+      <link>/teaching/pp4rs/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/teaching/pp4rs/</guid>
+      <description>&lt;h2 id=&#34;course-co-designer&#34;&gt;Course Co-designer&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.julianlanger.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Julian Langer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Much of a researchers live in modern economic research is spent in front of a computer &amp;ndash; be it to analyze data or to simulate economic models.&lt;/p&gt;
+&lt;p&gt;Unfortunately, it is rare that we have been taught how to do this in a structured and efficient way.
+Class exposure to programming languages is most often limited to the simple use of Stata and Matlab to solve `toy&#39; examples designed to illustrate a theoretical result or implement a method with known properties and ex-ante known results.
+These skills, like copy and pasting pieces of code repeatedly, do not scale up in a straightforward manner to handle complex projects that make up research papers, PhD theses or typical work in government or private business settings.
+As a result, young economic researchers spend too much time wrestling with software and too little time doing economics &amp;ndash; our comparative advantage.
+Even with large investments in software wrestling and self-learned skills, we typically have no idea how reliable or efficient our programs are.
+This course is designed to improve learners&#39; programming abilities.
+It is aimed at PhD students who expect to write their theses in a field that requires modest to heavy use of computation.
+Examples include applied microeconomics, econometrics, macroeconomics, computational economics and any field that either involves real-world data or does not generally lead to models with simple closed-form solutions.
+The course introduces students to a set of industry standard tools and programming methods that aim to reduce time spent programming while at the same time making programs more dependable and results reproducible.
+It draws extensively on basic techniques and tools that are the backbone of modern software development and have enabled the development and maintainance of Windows or the Google search engine.
+At the same time, these tools are simple enough to be used in small research projects, too.
+The course shows the usefulness of these techniques and trains the student in them by means of hands-on examples for a wide variety of economic and econometric applications.&lt;/p&gt;
+&lt;h2 id=&#34;target-audience&#34;&gt;Target Audience&lt;/h2&gt;
+&lt;p&gt;This course is intended for PhD students who are transitioning from coursework to research.
+Next to your economics background, we will only assume that you have written small pieces of code before, like Stata .do-files or Matlab .m-files for problem sets in your Masters degree or first-year PhD classes.
+Knowledge of a specific programming language is not required.
+A large part of this course is really about tool choice.
+We will take care in pointing out which language is most appropriate for which problem, and provide you with introductions to two popular choices for data- and computationally intensive computing.
+We also introduce a tool kit designed to improve the replicability of your code.
+The programming languages and tools introduced in the course are not the only choices available but some knowledge of these languages and best practices will make picking up others on your own relatively easy by providing a solid basic training.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The Carpentries</title>
+      <link>/teaching/swc-dc/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/teaching/swc-dc/</guid>
+      <description>&lt;p&gt;I am an instructor &amp;amp; lesson maintainer for Software Carpentry and Data Carpenty, who offer short courses on programming and reproducible research practices in professional and academic settings.&lt;/p&gt;
+&lt;h2 id=&#34;workshops&#34;&gt;Workshops&lt;/h2&gt;
+&lt;p&gt;I have led workshops at:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-10-26-american-online-economics&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;American University - Economics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-10-19-american-online-socialscience&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;American University - Social Science&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-10-13-uwm-online&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Wisconsin - Milwaukee&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-07-14-usda-online&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;US Dept of Agriculture&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-06-23-uchicago-online2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Chicago&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-03-12-carnegie&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Carnegie Mellon&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://uzhcrs.github.io/2019-02-07-zurich/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Zurich&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://mkcor.github.io/2018-11-14-trento/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Trento&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2018-03-08-geneva/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Geneva&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://hadrieng.github.io/2017-10-16-karolinska/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Karolinska Institute&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2017-06-01-stanford/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Stanford&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2017-05-01-dc-frb/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Federal Reserve Board of Governors&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://butterflyology.github.io/2017-02-14-kcfrb/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Federal Reserve in Kansas City&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;lesson-maintainance--contributions&#34;&gt;Lesson Maintainance &amp;amp; Contributions&lt;/h2&gt;
+&lt;p&gt;I maintain the lesson materials for  
+&lt;a href=&#34;http://www.datacarpentry.org/r-intro-geospatial/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Introduction to R for Geospatial Data&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I have contributed to the development of lesson material for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://datacarpentry.github.io/spreadsheets-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Organization in Spreadsheets for Social Scientists&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://datacarpentry.github.io/openrefine-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Cleaning with OpenRefine for Social Scientists&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://datacarpentry.org/r-raster-vector-geospatial&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Introduction to Geospatial Data with R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://datacarpentry.org/R-ecology-lesson&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Analysis and Visualization in R (Ecology)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://datacarpentry.github.io/sql-ecology-lesson&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Management with SQL for Ecologists&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://swcarpentry.github.io/r-novice-gapminder/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;R for Reproducible Scientific Analysis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pp4rs | Lachlan Deer</title>
+    <link>/tag/pp4rs/</link>
+      <atom:link href="/tag/pp4rs/index.xml" rel="self" type="application/rss+xml" />
+    <description>pp4rs</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>pp4rs</title>
+      <link>/tag/pp4rs/</link>
+    </image>
+    
+    <item>
+      <title>Programming Practices for Research Students</title>
+      <link>/teaching/pp4rs/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/teaching/pp4rs/</guid>
+      <description>&lt;h2 id=&#34;course-co-designer&#34;&gt;Course Co-designer&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.julianlanger.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Julian Langer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Much of a researchers live in modern economic research is spent in front of a computer &amp;ndash; be it to analyze data or to simulate economic models.&lt;/p&gt;
+&lt;p&gt;Unfortunately, it is rare that we have been taught how to do this in a structured and efficient way.
+Class exposure to programming languages is most often limited to the simple use of Stata and Matlab to solve `toy&#39; examples designed to illustrate a theoretical result or implement a method with known properties and ex-ante known results.
+These skills, like copy and pasting pieces of code repeatedly, do not scale up in a straightforward manner to handle complex projects that make up research papers, PhD theses or typical work in government or private business settings.
+As a result, young economic researchers spend too much time wrestling with software and too little time doing economics &amp;ndash; our comparative advantage.
+Even with large investments in software wrestling and self-learned skills, we typically have no idea how reliable or efficient our programs are.
+This course is designed to improve learners&#39; programming abilities.
+It is aimed at PhD students who expect to write their theses in a field that requires modest to heavy use of computation.
+Examples include applied microeconomics, econometrics, macroeconomics, computational economics and any field that either involves real-world data or does not generally lead to models with simple closed-form solutions.
+The course introduces students to a set of industry standard tools and programming methods that aim to reduce time spent programming while at the same time making programs more dependable and results reproducible.
+It draws extensively on basic techniques and tools that are the backbone of modern software development and have enabled the development and maintainance of Windows or the Google search engine.
+At the same time, these tools are simple enough to be used in small research projects, too.
+The course shows the usefulness of these techniques and trains the student in them by means of hands-on examples for a wide variety of economic and econometric applications.&lt;/p&gt;
+&lt;h2 id=&#34;target-audience&#34;&gt;Target Audience&lt;/h2&gt;
+&lt;p&gt;This course is intended for PhD students who are transitioning from coursework to research.
+Next to your economics background, we will only assume that you have written small pieces of code before, like Stata .do-files or Matlab .m-files for problem sets in your Masters degree or first-year PhD classes.
+Knowledge of a specific programming language is not required.
+A large part of this course is really about tool choice.
+We will take care in pointing out which language is most appropriate for which problem, and provide you with introductions to two popular choices for data- and computationally intensive computing.
+We also introduce a tool kit designed to improve the replicability of your code.
+The programming languages and tools introduced in the course are not the only choices available but some knowledge of these languages and best practices will make picking up others on your own relatively easy by providing a solid basic training.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

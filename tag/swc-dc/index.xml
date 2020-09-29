@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>swc-dc | Lachlan Deer</title>
+    <link>/tag/swc-dc/</link>
+      <atom:link href="/tag/swc-dc/index.xml" rel="self" type="application/rss+xml" />
+    <description>swc-dc</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>swc-dc</title>
+      <link>/tag/swc-dc/</link>
+    </image>
+    
+    <item>
+      <title>The Carpentries</title>
+      <link>/teaching/swc-dc/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/teaching/swc-dc/</guid>
+      <description>&lt;p&gt;I am an instructor &amp;amp; lesson maintainer for Software Carpentry and Data Carpenty, who offer short courses on programming and reproducible research practices in professional and academic settings.&lt;/p&gt;
+&lt;h2 id=&#34;workshops&#34;&gt;Workshops&lt;/h2&gt;
+&lt;p&gt;I have led workshops at:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-10-26-american-online-economics&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;American University - Economics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-10-19-american-online-socialscience&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;American University - Social Science&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-10-13-uwm-online&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Wisconsin - Milwaukee&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-07-14-usda-online&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;US Dept of Agriculture&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-06-23-uchicago-online2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Chicago&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2020-03-12-carnegie&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Carnegie Mellon&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://uzhcrs.github.io/2019-02-07-zurich/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Zurich&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://mkcor.github.io/2018-11-14-trento/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Trento&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2018-03-08-geneva/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;University of Geneva&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://hadrieng.github.io/2017-10-16-karolinska/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Karolinska Institute&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2017-06-01-stanford/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Stanford&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://lachlandeer.github.io/2017-05-01-dc-frb/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Federal Reserve Board of Governors&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://butterflyology.github.io/2017-02-14-kcfrb/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Federal Reserve in Kansas City&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;lesson-maintainance--contributions&#34;&gt;Lesson Maintainance &amp;amp; Contributions&lt;/h2&gt;
+&lt;p&gt;I maintain the lesson materials for  
+&lt;a href=&#34;http://www.datacarpentry.org/r-intro-geospatial/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Introduction to R for Geospatial Data&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I have contributed to the development of lesson material for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://datacarpentry.github.io/spreadsheets-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Organization in Spreadsheets for Social Scientists&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://datacarpentry.github.io/openrefine-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Cleaning with OpenRefine for Social Scientists&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://datacarpentry.org/r-raster-vector-geospatial&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Introduction to Geospatial Data with R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://datacarpentry.org/R-ecology-lesson&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Analysis and Visualization in R (Ecology)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://datacarpentry.github.io/sql-ecology-lesson&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Management with SQL for Ecologists&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://swcarpentry.github.io/r-novice-gapminder/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;R for Reproducible Scientific Analysis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

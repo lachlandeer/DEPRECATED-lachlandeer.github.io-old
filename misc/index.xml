@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Miscs | Lachlan Deer</title>
+    <link>/misc/</link>
+      <atom:link href="/misc/index.xml" rel="self" type="application/rss+xml" />
+    <description>Miscs</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>Miscs</title>
+      <link>/misc/</link>
+    </image>
+    
+    <item>
+      <title>Installation Guide - Research</title>
+      <link>/misc/install-ubuntu/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/misc/install-ubuntu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Installation Guide - Teaching</title>
+      <link>/misc/install-teaching/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/misc/install-teaching/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Markdown templates</title>
+      <link>/misc/mdown-template/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/misc/mdown-template/</guid>
+      <description>&lt;p&gt;Most of my written work is in markdown. Here are some templates I have used now and in the past. They may be a little outdated.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/lachlandeer/bookdown_rticles&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Article templates with &lt;code&gt;bookdown&lt;/code&gt; and &lt;code&gt;rticles&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/lachlandeer/markdown-article-template&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Article template in &lt;code&gt;markdown&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/lachlandeer/beamer-LagonBleu&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Beamer slide template&lt;/a&gt; with &lt;code&gt;markdown&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/lachlandeer/lachlandeer-cv&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CV template&lt;/a&gt; with &lt;code&gt;Rmarkdown&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://github.com/lachlandeer/xaringan-template&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HTML slide template&lt;/a&gt; with &lt;code&gt;Rmarkdown&lt;/code&gt; and &lt;code&gt;xaringan&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Snakemake Template with R</title>
+      <link>/misc/snakemake-r/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/misc/snakemake-r/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

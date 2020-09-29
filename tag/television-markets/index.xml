@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Television Markets | Lachlan Deer</title>
+    <link>/tag/television-markets/</link>
+      <atom:link href="/tag/television-markets/index.xml" rel="self" type="application/rss+xml" />
+    <description>Television Markets</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Wed, 10 May 2017 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>Television Markets</title>
+      <link>/tag/television-markets/</link>
+    </image>
+    
+    <item>
+      <title>The Regulation of Public Service Broadcasters - Should there be more advertising on television?</title>
+      <link>/publication/psb-ads/</link>
+      <pubDate>Wed, 10 May 2017 00:00:00 +0000</pubDate>
+      <guid>/publication/psb-ads/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
