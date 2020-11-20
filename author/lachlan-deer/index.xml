@@ -37,6 +37,542 @@
     </item>
     
     <item>
+      <title>Reporting Quantile Regression Estimates Across Multiple Quantiles in the Tidyverse</title>
+      <link>/post/quantile-regression-with-tidyverse/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>/post/quantile-regression-with-tidyverse/</guid>
+      <description>
+
+
+&lt;div id=&#34;overview&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;In this post I want to demonstrate how to estimate a quantile regression model across multiple quantiles and report the results in a regression table and a coefficent plot.
+I’ve found it hard to find a single reference on how to do this in the past, so I am hoping to fill the void.
+Throughout, I am going to try and stick to packages that are either inside the &lt;code&gt;tidyverse&lt;/code&gt; or integrate well with their philosophy.&lt;/p&gt;
+&lt;p&gt;Here’s the overview of what I am going to do in this post:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Read in data from the Medical Expenditure Panel Survey provided in Cameron &amp;amp; Trivedi’s book “Microeconometrics Using Stata”&lt;/li&gt;
+&lt;li&gt;Run an OLS regression&lt;/li&gt;
+&lt;li&gt;Run a single quantile regression&lt;/li&gt;
+&lt;li&gt;Run multiple quantile regressions using &lt;code&gt;purrr&lt;/code&gt;’s &lt;code&gt;map()&lt;/code&gt; function&lt;/li&gt;
+&lt;li&gt;Present the results in a:
+&lt;ul&gt;
+&lt;li&gt;Regression table&lt;/li&gt;
+&lt;li&gt;Coefficient plot&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Let’s get started…&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;libraries&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Libraries&lt;/h2&gt;
+&lt;p&gt;The first thing we need is to load the necessary packages:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(haven)
+library(dplyr)
+library(tidyr)
+library(skimr)
+library(ggplot2)
+library(quantreg)
+library(broom)
+library(purrr)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;load-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Load Data&lt;/h2&gt;
+&lt;p&gt;Next, we are going to load data some data.
+For this illustration we’re utilizing some data from Cameron &amp;amp; Trivedi’s “Microeconometrics Using Stata” textbook (see &lt;a href=&#34;http://cameron.econ.ucdavis.edu/musbook/mus.html&#34;&gt;here&lt;/a&gt;).
+This book was definitely a “go-to” for me back in the days where Stata was my default statistical programming language.&lt;/p&gt;
+&lt;p&gt;The data is an excerpt from the Medical Expenditure Panel Survey (MEPS) that’s been cleaned up a tad.
+We are going to download it directly from Cameron’s website.
+The data is in Stata format, so we’ll load it using &lt;code&gt;haven&lt;/code&gt;’s &lt;code&gt;read_dta()&lt;/code&gt; function that can read Stata datasets.
+Once it’s loaded, we’ll look at the structure of the dataset.
+&lt;code&gt;glimpse()&lt;/code&gt; will show use the column names, format and some example rows.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;meps_url &amp;lt;- &amp;quot;http://cameron.econ.ucdavis.edu/musbook/mus03data.dta&amp;quot;
+meps &amp;lt;- read_dta(meps_url)
+# look at the structure of data set
+glimpse(meps)
+## Rows: 3,064
+## Columns: 33
+## $ dupersid &amp;lt;dbl&amp;gt; 93193020, 72072017, 25296013, 23628011, 95041014, 25090018, …
+## $ year03   &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ age      &amp;lt;dbl&amp;gt; 69, 65, 85, 76, 71, 81, 74, 83, 80, 73, 78, 69, 70, 85, 73, …
+## $ famsze   &amp;lt;dbl&amp;gt; 2, 1, 1, 5, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, …
+## $ educyr   &amp;lt;dbl&amp;gt; 14, 11, 14, 10, 14, 14, 0, 12, 16, 10, 12, 12, 9, 10, 9, 8, …
+## $ totexp   &amp;lt;dbl&amp;gt; 3, 6, 9, 14, 18, 20, 24, 25, 29, 30, 30, 31, 36, 37, 38, 40,…
+## $ private  &amp;lt;dbl&amp;gt; 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, …
+## $ retire   &amp;lt;dbl&amp;gt; 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, …
+## $ female   &amp;lt;dbl&amp;gt; 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, …
+## $ white    &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, …
+## $ hisp     &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ marry    &amp;lt;dbl&amp;gt; 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, …
+## $ northe   &amp;lt;dbl&amp;gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ mwest    &amp;lt;dbl&amp;gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, …
+## $ south    &amp;lt;dbl&amp;gt; 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, …
+## $ phylim   &amp;lt;dbl&amp;gt; 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ actlim   &amp;lt;dbl&amp;gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ msa      &amp;lt;dbl&amp;gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, …
+## $ income   &amp;lt;dbl&amp;gt; 12.804, 34.959, 12.000, 7.000, 9.308, 13.300, 10.876, 21.669…
+## $ injury   &amp;lt;dbl&amp;gt; 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …
+## $ priolist &amp;lt;dbl&amp;gt; 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, …
+## $ totchr   &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, …
+## $ omc      &amp;lt;dbl&amp;gt; 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, …
+## $ hmo      &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, …
+## $ mnc      &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, …
+## $ ratio    &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ posexp   &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ suppins  &amp;lt;dbl&amp;gt; 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, …
+## $ hvgg     &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, …
+## $ hfp      &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ ltotexp  &amp;lt;dbl&amp;gt; 1.098612, 1.791759, 2.197225, 2.639057, 2.890372, 2.995732, …
+## $ hins     &amp;lt;dbl&amp;gt; 1, NA, NA, 1, 1, 1, 1, NA, NA, NA, NA, 1, 1, 1, 1, 1, 1, 1, …
+## $ hdem     &amp;lt;dbl&amp;gt; NA, 1, 1, 1, 1, 1, NA, NA, 1, 1, NA, NA, NA, NA, 1, 1, NA, N…&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can use &lt;code&gt;skimr&lt;/code&gt;’s &lt;code&gt;skim()&lt;/code&gt; function to view the summary stats and distribution of variables we will use in a regression model.
+I’ve dropped data that have missing values for &lt;code&gt;ltotexp&lt;/code&gt; (log total expenditure).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;meps %&amp;gt;%
+  drop_na(ltotexp) %&amp;gt;%
+  select(ltotexp, suppins, totchr, age, female, white) %&amp;gt;%
+  skim()&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-2&#34;&gt;Table 1: &lt;/span&gt;Data summary&lt;/caption&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Name&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Piped data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Number of rows&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2955&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Number of columns&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;_______________________&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Column type frequency:&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;numeric&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;________________________&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Group variables&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Variable type: numeric&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;skim_variable&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n_missing&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;complete_rate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;sd&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p0&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p25&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p50&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p75&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p100&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;hist&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ltotexp&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8.06&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.37&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.27&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8.11&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8.92&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;11.74&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▁▁▃▇▂&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;suppins&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.59&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.49&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▆▁▁▁▇&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;totchr&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.81&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.29&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.00&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▅▅▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;age&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;74.25&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.38&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;65.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;69.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;74.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;79.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;90.00&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▆▅▅▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;female&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.58&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.49&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▆▁▁▁▇&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;white&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.97&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▁▁▁▁▇&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;an-ols-regression-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;An OLS Regression Model&lt;/h2&gt;
+&lt;p&gt;In what follows we are going to work with data from MEPS where there are no missing values for log total expenditure.
+Although the missing datapoints would be dropped when we estimate a regression model, I like to filter them out myself.
+If for no other reason, it’s quite explicit.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;meps_filtered &amp;lt;- meps %&amp;gt;%
+  drop_na(ltotexp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The regression model we want to estimate is:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+ltotexp_{i} = \beta_0 + \beta_1 suppins_{i} + \beta_2 totchr_{i} + \beta_3 age_{i} + \beta_4 female_{i} + \beta_5 white_{i} + \varepsilon_{i}
+\]&lt;/span&gt;
+Let’s estimate that via OLS and look at the regression results:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ols_res &amp;lt;- lm(ltotexp ~ suppins + totchr + age + female + white, data= meps_filtered)
+
+summary(ols_res)
+## 
+## Call:
+## lm(formula = ltotexp ~ suppins + totchr + age + female + white, 
+##     data = meps_filtered)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.2474 -0.7666 -0.0032  0.7827  3.8516 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&amp;gt;|t|)    
+## (Intercept)  5.898155   0.295694  19.947  &amp;lt; 2e-16 ***
+## suppins      0.256811   0.046450   5.529 3.51e-08 ***
+## totchr       0.445272   0.017549  25.374  &amp;lt; 2e-16 ***
+## age          0.012656   0.003595   3.520 0.000437 ***
+## female      -0.076517   0.046110  -1.659 0.097132 .  
+## white        0.317811   0.141360   2.248 0.024635 *  
+## ---
+## Signif. codes:  0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1 &amp;#39; &amp;#39; 1
+## 
+## Residual standard error: 1.227 on 2949 degrees of freedom
+## Multiple R-squared:  0.1969, Adjusted R-squared:  0.1955 
+## F-statistic: 144.6 on 5 and 2949 DF,  p-value: &amp;lt; 2.2e-16&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We are going to use these as a benchmark to see how our quantile regression estimates vary relative to them.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;estimating-one-quantile-regression&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Estimating One Quantile Regression&lt;/h2&gt;
+&lt;p&gt;Quantile regression is going to allow our model to have different average effects along the distribution of the dependent variable (in our case &lt;code&gt;ltotexp&lt;/code&gt;).
+&lt;code&gt;quantreg&lt;/code&gt;’s &lt;code&gt;rq()&lt;/code&gt; function will allow us to estimate these regressions.
+If we are interested in the model around one quantile, for example around the median, we can estimate the model as follows:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;quant_reg &amp;lt;- rq(ltotexp ~ suppins + totchr + age + female + white, 
+                tau = 0.5,
+                data= meps_filtered
+                )
+
+summary(quant_reg)
+## 
+## Call: rq(formula = ltotexp ~ suppins + totchr + age + female + white, 
+##     tau = 0.5, data = meps_filtered)
+## 
+## tau: [1] 0.5
+## 
+## Coefficients:
+##             Value    Std. Error t value  Pr(&amp;gt;|t|)
+## (Intercept)  5.61116  0.35187   15.94656  0.00000
+## suppins      0.27698  0.05347    5.18025  0.00000
+## totchr       0.39427  0.01846   21.35942  0.00000
+## age          0.01487  0.00406    3.66512  0.00025
+## female      -0.08810  0.05406   -1.62961  0.10329
+## white        0.53648  0.19319    2.77697  0.00552&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;estimating-multiple-quantiles&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Estimating Multiple Quantiles&lt;/h2&gt;
+&lt;p&gt;Typically we aren’t only interested in estimating a quantile regression around one point in the distribution, but instead across multiple quantiles.
+We can to this by creating a vector with the quantiles we are interested in and then estimate the model for each quantile.
+We are going to do this using &lt;code&gt;purrr&lt;/code&gt;’s &lt;code&gt;map()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;quants &amp;lt;- c(0.1, 0.25, 0.5, 0.75, 0.9)
+
+qr_res &amp;lt;- map(quants, ~rq(ltotexp ~ suppins + totchr + age + female + white, 
+                  tau = .x, 
+                  data=meps_filtered)
+            )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The above snippet says that for each element of the vector &lt;code&gt;quants&lt;/code&gt; estimate the quantile regression using each element as the &lt;code&gt;tau&lt;/code&gt; value (i.e. quantile of interest).&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;
+The output of the map command is a list:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;typeof(qr_res)
+## [1] &amp;quot;list&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There’s 5 elements to of the list:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;length(qr_res)
+## [1] 5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Each element is the output of a quantile regression, one for each of the quantiles we wanted. For example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(qr_res[[1]])
+## 
+## Call: rq(formula = ltotexp ~ suppins + totchr + age + female + white, 
+##     tau = .x, data = meps_filtered)
+## 
+## tau: [1] 0.1
+## 
+## Coefficients:
+##             Value    Std. Error t value  Pr(&amp;gt;|t|)
+## (Intercept)  3.86704  0.48065    8.04549  0.00000
+## suppins      0.39572  0.07851    5.04027  0.00000
+## totchr       0.53919  0.02534   21.27920  0.00000
+## age          0.01927  0.00601    3.20732  0.00135
+## female      -0.01273  0.07579   -0.16794  0.86664
+## white        0.07344  0.19533    0.37597  0.70697&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(qr_res[[3]])
+## 
+## Call: rq(formula = ltotexp ~ suppins + totchr + age + female + white, 
+##     tau = .x, data = meps_filtered)
+## 
+## tau: [1] 0.5
+## 
+## Coefficients:
+##             Value    Std. Error t value  Pr(&amp;gt;|t|)
+## (Intercept)  5.61116  0.35187   15.94656  0.00000
+## suppins      0.27698  0.05347    5.18025  0.00000
+## totchr       0.39427  0.01846   21.35942  0.00000
+## age          0.01487  0.00406    3.66512  0.00025
+## female      -0.08810  0.05406   -1.62961  0.10329
+## white        0.53648  0.19319    2.77697  0.00552&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;summarising-regression-output&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Summarising Regression Output&lt;/h2&gt;
+&lt;p&gt;Now that we have the results in hand we want to present them in a readable way.
+We are going to look at two ways - a regression table and a coefficient plot.&lt;/p&gt;
+&lt;div id=&#34;the-regression-table&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The Regression Table&lt;/h3&gt;
+&lt;p&gt;We are going to use &lt;code&gt;stargazer&lt;/code&gt; to produce the estimates table.&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;
+We want the OLS results alongside the quantile regression estimates so we pass these across as the first two arguments (stargazer will unpack the list of models inside &lt;code&gt;qr_res&lt;/code&gt; for us).
+We must specify how we want the standard errors of the quantile regression to be computed (or accept a default), we’ve gone with bootstrapped standard errors.
+The rest of the lines arguments tidy up the table a little.
+&lt;code&gt;type = &#39;text&#39;&lt;/code&gt; prints the resulting table as plain text, switch to ‘latex’ if you want to put the table in a LaTex or Markdown document.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;stargazer::stargazer(ols_res, qr_res, 
+                     rq.se = &amp;quot;boot&amp;quot;,
+                     column.labels = c(&amp;quot;OLS&amp;quot;, paste(&amp;quot;tau = &amp;quot;, quants)),
+                     covariate.labels = c(&amp;quot;Supplementary Insurance == 1&amp;quot;,
+                                          &amp;quot;# Chronic Health Conditions&amp;quot;,
+                                          &amp;quot;Age&amp;quot;,
+                                          &amp;quot;Female&amp;quot;,
+                                          &amp;quot;White&amp;quot;),
+                     dep.var.labels = &amp;quot;log(Total Exp) | Total Exp &amp;gt; 0&amp;quot;,
+                     omit = c(&amp;quot;Constant&amp;quot;),
+                     model.numbers = TRUE,
+                     model.names =  FALSE,
+                     keep.stat = c(&amp;#39;n&amp;#39;),
+                     type =&amp;#39;text&amp;#39;)
+## 
+## =========================================================================================
+##                                                  Dependent variable:                     
+##                              ------------------------------------------------------------
+##                                             log(Total Exp) | Total Exp &amp;gt; 0               
+##                                OLS    tau = 0.1 tau = 0.25 tau = 0.5 tau = 0.75 tau = 0.9
+##                                (1)       (2)       (3)        (4)       (5)        (6)   
+## -----------------------------------------------------------------------------------------
+## Supplementary Insurance == 1 0.257*** 0.396***   0.386***  0.277***   0.149**    -0.014  
+##                              (0.046)   (0.069)   (0.059)    (0.060)   (0.068)    (0.097) 
+##                                                                                          
+## # Chronic Health Conditions  0.445*** 0.539***   0.459***  0.394***   0.374***  0.358*** 
+##                              (0.018)   (0.031)   (0.022)    (0.020)   (0.021)    (0.031) 
+##                                                                                          
+## Age                          0.013*** 0.019***   0.016***  0.015***   0.018***    0.006  
+##                              (0.004)   (0.005)   (0.005)    (0.004)   (0.005)    (0.007) 
+##                                                                                          
+## Female                       -0.077*   -0.013     -0.016    -0.088*   -0.122**   -0.158  
+##                              (0.046)   (0.074)   (0.052)    (0.051)   (0.055)    (0.101) 
+##                                                                                          
+## White                        0.318**    0.073    0.338***   0.536**    0.193      0.305  
+##                              (0.141)   (0.186)   (0.119)    (0.224)   (0.203)    (0.255) 
+##                                                                                          
+## -----------------------------------------------------------------------------------------
+## Observations                  2,955     2,955     2,955      2,955     2,955      2,955  
+## =========================================================================================
+## Note:                                                         *p&amp;lt;0.1; **p&amp;lt;0.05; ***p&amp;lt;0.01&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;coefficient-plots&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Coefficient Plots&lt;/h2&gt;
+&lt;p&gt;We now want to produce a coefficient plot.
+The plot should have a subplot for each variable of interest (we’ll do all), and each subplot has the point estimate and confidence interval of the regression coefficient for each quantile that we were interested in.
+We’ll also connect the point estimates with a line.&lt;/p&gt;
+&lt;p&gt;First, we will need the coefficients and confidence intervals in a format that’s easier to work with than the list format.
+To do this we will &lt;code&gt;tidy&lt;/code&gt; the regression output.
+For one set of estimates we would do this as follows:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tidy(qr_res[[3]], se = &amp;quot;boot&amp;quot;)
+## # A tibble: 6 x 8
+##   term        estimate std.error statistic     p.value conf.low conf.high   tau
+##   &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 (Intercept)   5.61     0.383       14.6  0            4.86       6.36     0.5
+## 2 suppins       0.277    0.0528       5.24 0.000000169  0.173      0.381    0.5
+## 3 totchr        0.394    0.0192      20.5  0            0.357      0.432    0.5
+## 4 age           0.0149   0.00410      3.63 0.000292     0.00683    0.0229   0.5
+## 5 female       -0.0881   0.0516      -1.71 0.0877      -0.189      0.0130   0.5
+## 6 white         0.536    0.208        2.58 0.00998      0.128      0.945    0.5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And we see that it produces a data frame woth the coefficient names along with the estimates and the quantile (&lt;code&gt;tau&lt;/code&gt;).
+To do this for each of the five elements of the list, we will use &lt;code&gt;map()&lt;/code&gt; to apply the &lt;code&gt;tidy()&lt;/code&gt; function to each element of the list &lt;code&gt;qr_res&lt;/code&gt;.
+&lt;code&gt;.x&lt;/code&gt; tells &lt;code&gt;R&lt;/code&gt; where to use the first argument of map function (i.e. &lt;code&gt;qr_res&lt;/code&gt; here), which for us is the first argument of the &lt;code&gt;tidy()&lt;/code&gt; command.
+This produces a list of dataframes, each formatted like the one above.
+To &lt;em&gt;unlist&lt;/em&gt; these into one larger dataframe, use &lt;code&gt;bind_rows()&lt;/code&gt; to flatten the list of dataframes.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;qr_tidy &amp;lt;- map(qr_res, ~tidy(.x, se = &amp;quot;boot&amp;quot;)) %&amp;gt;%
+            bind_rows()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The result looks like:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(qr_tidy, 10) # print first 10 rows
+## # A tibble: 10 x 8
+##    term       estimate std.error statistic      p.value conf.low conf.high   tau
+##    &amp;lt;chr&amp;gt;         &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+##  1 (Intercep…   3.87     0.381      10.2        0.       3.12       4.61    0.1 
+##  2 suppins      0.396    0.0751      5.27       1.49e-7  0.248      0.543   0.1 
+##  3 totchr       0.539    0.0259     20.8        0.       0.488      0.590   0.1 
+##  4 age          0.0193   0.00487     3.96       7.77e-5  0.00972    0.0288  0.1 
+##  5 female      -0.0127   0.0807     -0.158      8.75e-1 -0.171      0.145   0.1 
+##  6 white        0.0734   0.180       0.407      6.84e-1 -0.280      0.427   0.1 
+##  7 (Intercep…   4.75     0.367      12.9        0.       4.03       5.47    0.25
+##  8 suppins      0.386    0.0636      6.07       1.44e-9  0.261      0.510   0.25
+##  9 totchr       0.459    0.0250     18.4        0.       0.410      0.508   0.25
+## 10 age          0.0155   0.00467     3.32       9.17e-4  0.00634    0.0247  0.25&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We also tidy up the OLS estimation results so they have the same format.
+This is because we want to plot the OLS estimate too.
+Since there is only one set of estimates, we don’t need to worry about binding multiple sets of estimates together.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ols_tidy &amp;lt;- tidy(ols_res)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+qr_tidy %&amp;gt;%
+  ggplot(aes(x = tau,
+             y = estimate
+             )
+         ) + # the data we want to plot - in our case the tidied quantile regression output
+  geom_point(color = &amp;quot;#27408b&amp;quot;, 
+             size = 3
+             ) + # plots the coefficient estimates
+  geom_line(color=&amp;quot;#27408b&amp;quot;, 
+            size = 1
+            ) + # adds a line connecting the coefficient estimates
+  geom_errorbar(aes(
+    ymin = conf.low,
+    ymax = conf.high
+      ), 
+    width = 0.05,
+    size  = 0.3,
+    position = position_dodge(.9)
+    ) + # adds the confidence intervals as error bars
+  geom_hline(data = ols_tidy, 
+             aes(yintercept = estimate), 
+             color = &amp;quot;red&amp;quot;
+             ) + # add OLS estimate - note it is from another data set which is totally OK
+  facet_wrap(~term, 
+             scales=&amp;quot;free&amp;quot;, 
+             ncol=2
+             ) + # one plot per explanatory variable, subplots over 2 columns
+  theme_bw()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/quantile-regression-with-tidyverse/index_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now one could further format the plot by improving axes and subplot names - but we’ll leave this as it is.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;final-thoughts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Final Thoughts&lt;/h2&gt;
+&lt;p&gt;The aim of this post was to be able to estimate quantile regressions across multiple quantiles and report the output in a presentable way.
+I’ve tackled this (mostly) using packages from within the &lt;code&gt;tidyverse&lt;/code&gt;.
+Alternatively, one could stick within the a set of helper functions provided by &lt;code&gt;quantreg&lt;/code&gt; (see the vignette &lt;a href=&#34;https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf&#34;&gt;here&lt;/a&gt;)- but I’ve found what comes out harder to customize as I wanted.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Info&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()
+## R version 3.6.3 (2020-02-29)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Pop!_OS 20.04 LTS
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
+## 
+## locale:
+##  [1] LC_CTYPE=en_AU.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_AU.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_AU.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] purrr_0.3.4   broom_0.5.6   quantreg_5.55 SparseM_1.78  ggplot2_3.3.0
+## [6] skimr_2.1.2   tidyr_1.1.0   dplyr_0.8.5   haven_2.2.0  
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.4.6       highr_0.8          pillar_1.4.4       compiler_3.6.3    
+##  [5] forcats_0.5.0      base64enc_0.1-3    tools_3.6.3        digest_0.6.25     
+##  [9] nlme_3.1-147       lattice_0.20-40    jsonlite_1.6.1     evaluate_0.14     
+## [13] lifecycle_0.2.0    tibble_3.0.1       gtable_0.3.0       pkgconfig_2.0.3   
+## [17] rlang_0.4.6        Matrix_1.2-18      cli_2.0.2          curl_4.3          
+## [21] yaml_2.2.1         blogdown_0.19      xfun_0.14          stargazer_5.2.2   
+## [25] repr_1.1.0         withr_2.2.0        stringr_1.4.0      knitr_1.28        
+## [29] generics_0.0.2     MatrixModels_0.4-1 vctrs_0.3.0        hms_0.5.3         
+## [33] grid_3.6.3         tidyselect_1.1.0   glue_1.4.1         R6_2.4.1          
+## [37] fansi_0.4.1        rmarkdown_2.3      bookdown_0.19      farver_2.0.3      
+## [41] readr_1.3.1        magrittr_1.5       backports_1.1.7    scales_1.1.1      
+## [45] ellipsis_0.3.1     htmltools_0.4.0    assertthat_0.2.1   colorspace_1.4-1  
+## [49] labeling_0.3       utf8_1.1.4         stringi_1.4.6      munsell_0.5.0     
+## [53] crayon_1.3.4&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Note that if you read &lt;code&gt;quantreg&lt;/code&gt;’s manual and vignettes one can estimate multiple quantile regressions by passing a vector to the &lt;code&gt;tau&lt;/code&gt; argument. I’ve found working with the output using the &lt;code&gt;map()&lt;/code&gt; method easier.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;
+The &lt;code&gt;modelsummary&lt;/code&gt; package is currently my preferred method, but I had difficulty getting it to work with quantile regression output.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Gender Effects for Loss Aversion - Yes, No, Maybe?</title>
       <link>/publication/gender-loss-aversion/</link>
       <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
@@ -60,207 +596,11 @@
     </item>
     
     <item>
-      <title>Display Jupyter Notebooks with Academic</title>
-      <link>/post/jupyter/</link>
-      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>/post/jupyter/</guid>
-      <description>&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from IPython.core.display import Image
-Image(&#39;https://www.python.org/static/community_logos/python-logo-master-v3-TM-flattened.png&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;./index_1_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;print(&amp;quot;Welcome to Academic!&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;Welcome to Academic!
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;install-python-and-jupyterlab&#34;&gt;Install Python and JupyterLab&lt;/h2&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://www.anaconda.com/distribution/#download-section&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Install Anaconda&lt;/a&gt; which includes Python 3 and JupyterLab.&lt;/p&gt;
-&lt;p&gt;Alternatively, install JupyterLab with &lt;code&gt;pip3 install jupyterlab&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;create-or-upload-a-jupyter-notebook&#34;&gt;Create or upload a Jupyter notebook&lt;/h2&gt;
-&lt;p&gt;Run the following commands in your Terminal, substituting &lt;code&gt;&amp;lt;MY-WEBSITE-FOLDER&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;SHORT-POST-TITLE&amp;gt;&lt;/code&gt; with the file path to your Academic website folder and a short title for your blog post (use hyphens instead of spaces), respectively:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;mkdir -p &amp;lt;MY-WEBSITE-FOLDER&amp;gt;/content/post/&amp;lt;SHORT-POST-TITLE&amp;gt;/
-cd &amp;lt;MY-WEBSITE-FOLDER&amp;gt;/content/post/&amp;lt;SHORT-POST-TITLE&amp;gt;/
-jupyter lab index.ipynb
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The &lt;code&gt;jupyter&lt;/code&gt; command above will launch the JupyterLab editor, allowing us to add Academic metadata and write the content.&lt;/p&gt;
-&lt;h2 id=&#34;edit-your-post-metadata&#34;&gt;Edit your post metadata&lt;/h2&gt;
-&lt;p&gt;The first cell of your Jupter notebook will contain your post metadata (
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/front-matter/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;front matter&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;In Jupter, choose &lt;em&gt;Markdown&lt;/em&gt; as the type of the first cell and wrap your Academic metadata in three dashes, indicating that it is YAML front matter:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;---
-title: My post&#39;s title
-date: 2019-09-01
-
-# Put any other Academic metadata here...
----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Edit the metadata of your post, using the 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/managing-content&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation&lt;/a&gt; as a guide to the available options.&lt;/p&gt;
-&lt;p&gt;To set a 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/managing-content/#featured-image&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;featured image&lt;/a&gt;, place an image named &lt;code&gt;featured&lt;/code&gt; into your post&amp;rsquo;s folder.&lt;/p&gt;
-&lt;p&gt;For other tips, such as using math, see the guide on 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;writing content with Academic&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;convert-notebook-to-markdown&#34;&gt;Convert notebook to Markdown&lt;/h2&gt;
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;jupyter nbconvert index.ipynb --to markdown --NbConvertApp.output_files_dir=.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
-&lt;p&gt;This post was created with Jupyter. The orginal files can be found at &lt;a href=&#34;https://github.com/gcushen/hugo-academic/tree/master/exampleSite/content/post/jupyter&#34;&gt;https://github.com/gcushen/hugo-academic/tree/master/exampleSite/content/post/jupyter&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>The Regulation of Public Service Broadcasters - Should there be more advertising on television?</title>
       <link>/publication/psb-ads/</link>
       <pubDate>Wed, 10 May 2017 00:00:00 +0000</pubDate>
       <guid>/publication/psb-ads/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>Academic: the website builder for Hugo</title>
-      <link>/post/getting-started/</link>
-      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
-      <guid>/post/getting-started/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Create a free website with Academic using Markdown, Jupyter, or RStudio. Choose a beautiful color theme and build anything with the Page Builder - over 40 &lt;em&gt;widgets&lt;/em&gt;, &lt;em&gt;themes&lt;/em&gt;, and &lt;em&gt;language packs&lt;/em&gt; included!&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://academic-demo.netlify.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Check out the latest &lt;strong&gt;demo&lt;/strong&gt;&lt;/a&gt; of what you&amp;rsquo;ll get in less than 10 minutes, or 
-&lt;a href=&#34;https://sourcethemes.com/academic/#expo&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;view the &lt;strong&gt;showcase&lt;/strong&gt;&lt;/a&gt; of personal, project, and business sites.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;👉 
-&lt;a href=&#34;#install&#34;&gt;&lt;strong&gt;Get Started&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;📚 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;View the &lt;strong&gt;documentation&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;💬 
-&lt;a href=&#34;https://discourse.gohugo.io&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Ask a question&lt;/strong&gt; on the forum&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;👥 
-&lt;a href=&#34;https://spectrum.chat/academic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Chat with the &lt;strong&gt;community&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🐦 Twitter: 
-&lt;a href=&#34;https://twitter.com/source_themes&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;@source_themes&lt;/a&gt; 
-&lt;a href=&#34;https://twitter.com/GeorgeCushen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;@GeorgeCushen&lt;/a&gt; 
-&lt;a href=&#34;https://twitter.com/search?q=%23MadeWithAcademic&amp;amp;src=typd&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;#MadeWithAcademic&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;💡 
-&lt;a href=&#34;https://github.com/gcushen/hugo-academic/issues&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Request a &lt;strong&gt;feature&lt;/strong&gt; or report a &lt;strong&gt;bug&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;⬆️ &lt;strong&gt;Updating?&lt;/strong&gt; View the 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/update/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Update Guide&lt;/a&gt; and 
-&lt;a href=&#34;https://sourcethemes.com/academic/updates/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Release Notes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;❤️ &lt;strong&gt;Support development&lt;/strong&gt; of Academic:
-&lt;ul&gt;
-&lt;li&gt;☕️ 
-&lt;a href=&#34;https://paypal.me/cushen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Donate a coffee&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;💵 
-&lt;a href=&#34;https://www.patreon.com/cushen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Become a backer on &lt;strong&gt;Patreon&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🖼️ 
-&lt;a href=&#34;https://www.redbubble.com/people/neutreno/works/34387919-academic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Decorate your laptop or journal with an Academic &lt;strong&gt;sticker&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;👕 
-&lt;a href=&#34;https://academic.threadless.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wear the &lt;strong&gt;T-shirt&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;👩‍💻 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/contribute/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Contribute&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-academic-is-mobile-first-with-a-responsive-design-to-ensure-that-your-site-looks-stunning-on-every-device&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/academic.png&#34; data-caption=&#34;Academic is mobile first with a responsive design to ensure that your site looks stunning on every device.&#34;&gt;
-
-
-  &lt;img src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/academic.png&#34; alt=&#34;&#34;  &gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    Academic is mobile first with a responsive design to ensure that your site looks stunning on every device.
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;Key features:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Page builder&lt;/strong&gt; - Create &lt;em&gt;anything&lt;/em&gt; with 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/page-builder/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;widgets&lt;/strong&gt;&lt;/a&gt; and 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;elements&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Edit any type of content&lt;/strong&gt; - Blog posts, publications, talks, slides, projects, and more!&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Create content&lt;/strong&gt; in 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Markdown&lt;/strong&gt;&lt;/a&gt;, 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/jupyter/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Jupyter&lt;/strong&gt;&lt;/a&gt;, or 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-rstudio&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;RStudio&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Plugin System&lt;/strong&gt; - Fully customizable 
-&lt;a href=&#34;https://sourcethemes.com/academic/themes/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;color&lt;/strong&gt; and &lt;strong&gt;font themes&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Display Code and Math&lt;/strong&gt; - Code highlighting and 
-&lt;a href=&#34;https://en.wikibooks.org/wiki/LaTeX/Mathematics&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LaTeX math&lt;/a&gt; supported&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Integrations&lt;/strong&gt; - 
-&lt;a href=&#34;https://analytics.google.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Analytics&lt;/a&gt;, 
-&lt;a href=&#34;https://disqus.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Disqus commenting&lt;/a&gt;, Maps, Contact Forms, and more!&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Beautiful Site&lt;/strong&gt; - Simple and refreshing one page design&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Industry-Leading SEO&lt;/strong&gt; - Help get your website found on search engines and social media&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Media Galleries&lt;/strong&gt; - Display your images and videos with captions in a customizable gallery&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Mobile Friendly&lt;/strong&gt; - Look amazing on every screen with a mobile friendly version of your site&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Multi-language&lt;/strong&gt; - 15+ language packs including English, 中文, and Português&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Multi-user&lt;/strong&gt; - Each author gets their own profile page&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Privacy Pack&lt;/strong&gt; - Assists with GDPR&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Stand Out&lt;/strong&gt; - Bring your site to life with animation, parallax backgrounds, and scroll effects&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;One-Click Deployment&lt;/strong&gt; - No servers. No databases. Only files.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;themes&#34;&gt;Themes&lt;/h2&gt;
-&lt;p&gt;Academic comes with &lt;strong&gt;automatic day (light) and night (dark) mode&lt;/strong&gt; built-in. Alternatively, visitors can  choose their preferred mode - click the sun/moon icon in the top right of the 
-&lt;a href=&#34;https://academic-demo.netlify.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Demo&lt;/a&gt; to see it in action! Day/night mode can also be disabled by the site admin in &lt;code&gt;params.toml&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://sourcethemes.com/academic/themes/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Choose a stunning &lt;strong&gt;theme&lt;/strong&gt; and &lt;strong&gt;font&lt;/strong&gt;&lt;/a&gt; for your site. Themes are fully 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/customization/#custom-theme&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;customizable&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;ecosystem&#34;&gt;Ecosystem&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;
-&lt;a href=&#34;https://github.com/sourcethemes/academic-admin&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Academic Admin&lt;/a&gt;:&lt;/strong&gt; An admin tool to import publications from BibTeX or import assets for an offline site&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;
-&lt;a href=&#34;https://github.com/sourcethemes/academic-scripts&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Academic Scripts&lt;/a&gt;:&lt;/strong&gt; Scripts to help migrate content to new versions of Academic&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
-&lt;p&gt;You can choose from one of the following four methods to install:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-web-browser&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;one-click install using your web browser (recommended)&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-git&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;install on your computer using &lt;strong&gt;Git&lt;/strong&gt; with the Command Prompt/Terminal app&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-zip&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;install on your computer by downloading the &lt;strong&gt;ZIP files&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-rstudio&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;install on your computer with &lt;strong&gt;RStudio&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Then 
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/get-started/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;personalize and deploy your new site&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;updating&#34;&gt;Updating&lt;/h2&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://sourcethemes.com/academic/docs/update/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;View the Update Guide&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Feel free to &lt;em&gt;star&lt;/em&gt; the project on 
-&lt;a href=&#34;https://github.com/gcushen/hugo-academic/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github&lt;/a&gt; to help keep track of 
-&lt;a href=&#34;https://sourcethemes.com/academic/updates&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;updates&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;license&#34;&gt;License&lt;/h2&gt;
-&lt;p&gt;Copyright 2016-present 
-&lt;a href=&#34;https://georgecushen.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;George Cushen&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Released under the 
-&lt;a href=&#34;https://github.com/gcushen/hugo-academic/blob/master/LICENSE.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MIT&lt;/a&gt; license.&lt;/p&gt;
-</description>
     </item>
     
     <item>
