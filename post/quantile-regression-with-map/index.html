@@ -1,0 +1,1847 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Lachlan Deer">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="How to estimate and report many quantile regressions using functions from the `tidyverse`">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/quantile-regression-with-map/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#800000ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-69926847-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-69926847-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/quantile-regression-with-map/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@lachlandeer">
+  <meta property="twitter:creator" content="@lachlandeer">
+  
+  <meta property="og:site_name" content="Lachlan Deer">
+  <meta property="og:url" content="/post/quantile-regression-with-map/">
+  <meta property="og:title" content="Reporting Multiple Quantile Regression Estimates in the Tidyverse | Lachlan Deer">
+  <meta property="og:description" content="How to estimate and report many quantile regressions using functions from the `tidyverse`"><meta property="og:image" content="/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-11-02T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-11-02T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/quantile-regression-with-map/"
+  },
+  "headline": "Reporting Multiple Quantile Regression Estimates in the Tidyverse",
+  
+  "datePublished": "2020-11-02T00:00:00Z",
+  "dateModified": "2020-11-02T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Lachlan Deer"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lachlan Deer",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "How to estimate and report many quantile regressions using functions from the `tidyverse`"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Reporting Multiple Quantile Regression Estimates in the Tidyverse | Lachlan Deer</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class=" ">
+
+  
+  
+  
+    <script>window.staDarkLightChooser = true;</script>
+  
+  
+    <script>const isSiteThemeDark = false;</script>
+  
+  
+  <script src="/js/load-theme.js"></script>
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Lachlan Deer</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Lachlan Deer</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#research"><span>Research</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#teaching"><span>Teaching</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#code"><span>Code</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#misc"><span>Misc.</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Reporting Multiple Quantile Regression Estimates in the Tidyverse</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span ><a href="/author/lachlan-deer/">Lachlan Deer</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Nov 2, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    16 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/r/">R</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>In this post I want to show how to estimate a quantile regression model across multiple quantiles and report the results in tabular and graphical formats.
+I’ve found it hard to find a single reference on how to do this in the past, so I am hoping to provide an attempt at filling the void.
+Throughout, I am going to try and stick to packages that are either inside the <code>tidyverse</code> or integrate well with their philosophy.</p>
+<p>Here’s the overview of what I am going to do in this post:</p>
+<ol style="list-style-type: decimal">
+<li>Read in data from the Medical Expenditure Panel Survey provided in Cameron &amp; Trivedi’s book “Microeconometrics Using Stata”</li>
+<li>Run an OLS regression</li>
+<li>Run a single quantile regression</li>
+<li>Run multiple quantile regressions using <code>purrr</code>’s <code>map()</code> function</li>
+<li>Present the results in a:
+<ul>
+<li>Regression table</li>
+<li>Coefficient plot</li>
+</ul></li>
+</ol>
+<p>Let’s get started…</p>
+</div>
+<div id="libraries" class="section level2">
+<h2>Libraries</h2>
+<p>First thing we need is to load the necessary packages:</p>
+<pre class="r"><code>library(haven)
+library(dplyr)
+library(tidyr)
+library(skimr)
+library(ggplot2)
+library(quantreg)
+library(broom)
+library(purrr)</code></pre>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load Data</h2>
+<p>Next, we are going to load data some data.
+For this illustration we’re utilizing some data from Cameron &amp; Trivedi’s “Microeconometrics Using Stata” textbook (see <a href="http://cameron.econ.ucdavis.edu/musbook/mus.html">here</a>).
+This book was definitely a “go-to” for me back in the days where Stata was my default statistical programming language.</p>
+<p>The data is an excerpt from the Medical Expenditure Panel Survey (MEPS) that’s been cleaned up a tad.
+We are going to download it directly from the Cameron’s website.
+The data is in Stata format, so we’ll load it using <code>haven</code>’s <code>read_dta()</code> function that can read Stata datasets.
+Once it’s loaded, we’ll look at the structure of the dataset.
+<code>glimpse()</code> will show use the column names, format and some example rows.</p>
+<pre class="r"><code>meps_url &lt;- &quot;http://cameron.econ.ucdavis.edu/musbook/mus03data.dta&quot;
+meps &lt;- read_dta(meps_url)
+# look at the structure of data set
+glimpse(meps)
+## Rows: 3,064
+## Columns: 33
+## $ dupersid &lt;dbl&gt; 93193020, 72072017, 25296013, 23628011, 95041014, 25090018, …
+## $ year03   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ age      &lt;dbl&gt; 69, 65, 85, 76, 71, 81, 74, 83, 80, 73, 78, 69, 70, 85, 73, …
+## $ famsze   &lt;dbl&gt; 2, 1, 1, 5, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, …
+## $ educyr   &lt;dbl&gt; 14, 11, 14, 10, 14, 14, 0, 12, 16, 10, 12, 12, 9, 10, 9, 8, …
+## $ totexp   &lt;dbl&gt; 3, 6, 9, 14, 18, 20, 24, 25, 29, 30, 30, 31, 36, 37, 38, 40,…
+## $ private  &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, …
+## $ retire   &lt;dbl&gt; 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, …
+## $ female   &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, …
+## $ white    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, …
+## $ hisp     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ marry    &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, …
+## $ northe   &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ mwest    &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, …
+## $ south    &lt;dbl&gt; 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, …
+## $ phylim   &lt;dbl&gt; 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ actlim   &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ msa      &lt;dbl&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, …
+## $ income   &lt;dbl&gt; 12.804, 34.959, 12.000, 7.000, 9.308, 13.300, 10.876, 21.669…
+## $ injury   &lt;dbl&gt; 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …
+## $ priolist &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, …
+## $ totchr   &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, …
+## $ omc      &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, …
+## $ hmo      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, …
+## $ mnc      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, …
+## $ ratio    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ posexp   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ suppins  &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, …
+## $ hvgg     &lt;dbl&gt; 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, …
+## $ hfp      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ ltotexp  &lt;dbl&gt; 1.098612, 1.791759, 2.197225, 2.639057, 2.890372, 2.995732, …
+## $ hins     &lt;dbl&gt; 1, NA, NA, 1, 1, 1, 1, NA, NA, NA, NA, 1, 1, 1, 1, 1, 1, 1, …
+## $ hdem     &lt;dbl&gt; NA, 1, 1, 1, 1, 1, NA, NA, 1, 1, NA, NA, NA, NA, 1, 1, NA, N…</code></pre>
+<p>We can use <code>skimr</code>’s <code>skim()</code> function to view the summary stats and distribution of variables we will use in a regression model.
+I’ve dropped data that have missing values for <code>ltotexp</code> (log total expenditure).</p>
+<pre class="r"><code>meps %&gt;%
+  drop_na(ltotexp) %&gt;%
+  select(ltotexp, suppins, totchr, age, female, white) %&gt;%
+  skim()</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">2955</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">6</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">6</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ltotexp</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">8.06</td>
+<td align="right">1.37</td>
+<td align="right">1.1</td>
+<td align="right">7.27</td>
+<td align="right">8.11</td>
+<td align="right">8.92</td>
+<td align="right">11.74</td>
+<td align="left">▁▁▃▇▂</td>
+</tr>
+<tr class="even">
+<td align="left">suppins</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.59</td>
+<td align="right">0.49</td>
+<td align="right">0.0</td>
+<td align="right">0.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="left">▆▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td align="left">totchr</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1.81</td>
+<td align="right">1.29</td>
+<td align="right">0.0</td>
+<td align="right">1.00</td>
+<td align="right">2.00</td>
+<td align="right">3.00</td>
+<td align="right">7.00</td>
+<td align="left">▇▅▅▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">age</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">74.25</td>
+<td align="right">6.38</td>
+<td align="right">65.0</td>
+<td align="right">69.00</td>
+<td align="right">74.00</td>
+<td align="right">79.00</td>
+<td align="right">90.00</td>
+<td align="left">▇▆▅▅▁</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.58</td>
+<td align="right">0.49</td>
+<td align="right">0.0</td>
+<td align="right">0.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="left">▆▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td align="left">white</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.97</td>
+<td align="right">0.16</td>
+<td align="right">0.0</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="right">1.00</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="an-ols-regression-model" class="section level2">
+<h2>An OLS Regression Model</h2>
+<p>In what follows we are going to work with data from MEPS where there are no missing values for log total expenditure.
+Although the missing datapoints would be dropped when we estimate a regression model, I like to filter them out myself.
+If for no other reason, it’s quite explicit.</p>
+<pre class="r"><code>meps_filtered &lt;- meps %&gt;%
+  drop_na(ltotexp)</code></pre>
+<p>The regression model we want to estimate is:</p>
+<p><span class="math display">\[
+ltotexp_{i} = \beta_0 + \beta_1 suppins_{i} + \beta_2 totchr_{i} + \beta_3 age_{i} + \beta_4 female_{i} + \beta_5 white_{i} + \varepsilon_{i}
+\]</span>
+Let’s estimate that via OLS and look at the regression results:</p>
+<pre class="r"><code>ols_res &lt;- lm(ltotexp ~ suppins + totchr + age + female + white, data= meps_filtered)
+
+summary(ols_res)
+## 
+## Call:
+## lm(formula = ltotexp ~ suppins + totchr + age + female + white, 
+##     data = meps_filtered)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.2474 -0.7666 -0.0032  0.7827  3.8516 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  5.898155   0.295694  19.947  &lt; 2e-16 ***
+## suppins      0.256811   0.046450   5.529 3.51e-08 ***
+## totchr       0.445272   0.017549  25.374  &lt; 2e-16 ***
+## age          0.012656   0.003595   3.520 0.000437 ***
+## female      -0.076517   0.046110  -1.659 0.097132 .  
+## white        0.317811   0.141360   2.248 0.024635 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.227 on 2949 degrees of freedom
+## Multiple R-squared:  0.1969, Adjusted R-squared:  0.1955 
+## F-statistic: 144.6 on 5 and 2949 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We are going to use these as a benchmark to see how our quantile regression estimates vary relative to them.</p>
+</div>
+<div id="estimating-one-quantile-regression" class="section level2">
+<h2>Estimating One Quantile Regression</h2>
+<p>Quantile regression is going to allow our model to have different average effects along the distribution of the dependent variable (in our case <code>ltotexp</code>).
+<code>quantreg</code>’s <code>rq()</code> function will allow us to estimate these regressions.
+If we are interested in the model around one quantile, for example around the median, we can estimate the model as follows:</p>
+<pre class="r"><code>quant_reg &lt;- rq(ltotexp ~ suppins + totchr + age + female + white, 
+                tau = 0.5,
+                data= meps_filtered
+                )
+
+summary(quant_reg)
+## 
+## Call: rq(formula = ltotexp ~ suppins + totchr + age + female + white, 
+##     tau = 0.5, data = meps_filtered)
+## 
+## tau: [1] 0.5
+## 
+## Coefficients:
+##             Value    Std. Error t value  Pr(&gt;|t|)
+## (Intercept)  5.61116  0.35187   15.94656  0.00000
+## suppins      0.27698  0.05347    5.18025  0.00000
+## totchr       0.39427  0.01846   21.35942  0.00000
+## age          0.01487  0.00406    3.66512  0.00025
+## female      -0.08810  0.05406   -1.62961  0.10329
+## white        0.53648  0.19319    2.77697  0.00552</code></pre>
+</div>
+<div id="estimating-multiple-quantiles" class="section level2">
+<h2>Estimating Multiple Quantiles</h2>
+<p>Typically we aren’t only interested in estimating a quantile regression around one point in the distribution, but instead across multiple quantiles.
+To do this we can create a vector with the quantiles we are interested in and then estimate the model for each quantile.
+We are going to do this using <code>purrr</code>’s <code>map()</code> function:</p>
+<pre class="r"><code>quants &lt;- c(0.1, 0.25, 0.5, 0.75, 0.9)
+
+qr_res &lt;- map(quants, ~rq(ltotexp ~ suppins + totchr + age + female + white, 
+                  tau = .x, 
+                  data=meps_filtered)
+            )</code></pre>
+<p>The above snippet says that for each element of the vector <code>quants</code> estimate the quantile regression using each element as the <code>tau</code> value (i.e. quantile of interest).<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+The output of the map command is a list:</p>
+<pre class="r"><code>typeof(qr_res)
+## [1] &quot;list&quot;</code></pre>
+<p>There’s 5 elements to of the list:</p>
+<pre class="r"><code>length(qr_res)
+## [1] 5</code></pre>
+<p>Each element is the output of a quantile regression, differing by which quantile they are estimated for:</p>
+<pre class="r"><code>summary(qr_res[[1]])
+## 
+## Call: rq(formula = ltotexp ~ suppins + totchr + age + female + white, 
+##     tau = .x, data = meps_filtered)
+## 
+## tau: [1] 0.1
+## 
+## Coefficients:
+##             Value    Std. Error t value  Pr(&gt;|t|)
+## (Intercept)  3.86704  0.48065    8.04549  0.00000
+## suppins      0.39572  0.07851    5.04027  0.00000
+## totchr       0.53919  0.02534   21.27920  0.00000
+## age          0.01927  0.00601    3.20732  0.00135
+## female      -0.01273  0.07579   -0.16794  0.86664
+## white        0.07344  0.19533    0.37597  0.70697</code></pre>
+<pre class="r"><code>summary(qr_res[[3]])
+## 
+## Call: rq(formula = ltotexp ~ suppins + totchr + age + female + white, 
+##     tau = .x, data = meps_filtered)
+## 
+## tau: [1] 0.5
+## 
+## Coefficients:
+##             Value    Std. Error t value  Pr(&gt;|t|)
+## (Intercept)  5.61116  0.35187   15.94656  0.00000
+## suppins      0.27698  0.05347    5.18025  0.00000
+## totchr       0.39427  0.01846   21.35942  0.00000
+## age          0.01487  0.00406    3.66512  0.00025
+## female      -0.08810  0.05406   -1.62961  0.10329
+## white        0.53648  0.19319    2.77697  0.00552</code></pre>
+</div>
+<div id="summarising-regression-output" class="section level2">
+<h2>Summarising Regression Output</h2>
+<p>Now that we have the results in hand we want to present them in a readable way.
+We are going to look at two ways - a regression table and a coefficient plot.</p>
+<div id="the-regression-table" class="section level3">
+<h3>The Regression Table</h3>
+<p>We are going to use <code>stargazer</code> to produce the estimates table.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>
+We want the OLS results alongside the quantile regression estimates so we pass these across as the first two arguments (stargazer will unpack the list of models inside <code>qr_res</code> for us).
+We must specify how we want the standard errors of the quantile regression to be computed (or accept a default), we’ve gone with bootstrapped standard errors.
+The rest of the lines arguments tidy up the table a little.
+<code>type = 'text'</code> prints the resulting table as plain text, switch to ‘latex’ if you want to put the table in a LaTex or Markdown document.</p>
+<pre class="r"><code>stargazer::stargazer(ols_res, qr_res, 
+                     #rq.se = &quot;boot&quot;,
+                     column.labels = c(&quot;OLS&quot;, paste(&quot;tau = &quot;, quants)),
+                     covariate.labels = c(&quot;Supplementary Insurance == 1&quot;,
+                                          &quot;# Chronic Health Conditions&quot;,
+                                          &quot;Age&quot;,
+                                          &quot;Female&quot;,
+                                          &quot;White&quot;),
+                     dep.var.labels = &quot;log(Total Exp) | Total Exp &gt; 0&quot;,
+                     omit = c(&quot;Constant&quot;),
+                     model.numbers = TRUE,
+                     model.names =  FALSE,
+                     keep.stat = c(&#39;n&#39;),
+                     type =&#39;text&#39;)
+## 
+## =========================================================================================
+##                                                  Dependent variable:                     
+##                              ------------------------------------------------------------
+##                                             log(Total Exp) | Total Exp &gt; 0               
+##                                OLS    tau = 0.1 tau = 0.25 tau = 0.5 tau = 0.75 tau = 0.9
+##                                (1)       (2)       (3)        (4)       (5)        (6)   
+## -----------------------------------------------------------------------------------------
+## Supplementary Insurance == 1 0.257*** 0.396***   0.386***  0.277***   0.149**    -0.014  
+##                              (0.046)   (0.079)   (0.060)    (0.053)   (0.062)    (0.086) 
+##                                                                                          
+## # Chronic Health Conditions  0.445*** 0.539***   0.459***  0.394***   0.374***  0.358*** 
+##                              (0.018)   (0.025)   (0.018)    (0.018)   (0.023)    (0.033) 
+##                                                                                          
+## Age                          0.013*** 0.019***   0.016***  0.015***   0.018***    0.006  
+##                              (0.004)   (0.006)   (0.004)    (0.004)   (0.005)    (0.007) 
+##                                                                                          
+## Female                       -0.077*   -0.013     -0.016    -0.088    -0.122**   -0.158* 
+##                              (0.046)   (0.076)   (0.053)    (0.054)   (0.061)    (0.089) 
+##                                                                                          
+## White                        0.318**    0.073    0.338***  0.536***    0.193      0.305  
+##                              (0.141)   (0.195)   (0.097)    (0.193)   (0.257)    (0.243) 
+##                                                                                          
+## -----------------------------------------------------------------------------------------
+## Observations                  2,955     2,955     2,955      2,955     2,955      2,955  
+## =========================================================================================
+## Note:                                                         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+</div>
+</div>
+<div id="coefficient-plots" class="section level2">
+<h2>Coefficient Plots</h2>
+<p>We now want to produce a coefficient plot.
+The plot should have one subplot for each variable of interest (we’ll do all), and each subplot has the point estimate and confidence interval of the regression coefficient for each quantile that we were interested in.
+We’ll also connect the point estimates with a line.</p>
+<p>First, we will need the coefficients and confidence intervals in a format that’s easier to work with than the list format.
+To do this we will <code>tidy</code> the regression output.
+For one set of estimates we would do this as follows:</p>
+<pre class="r"><code>tidy(qr_res[[3]], se = &quot;boot&quot;)
+## # A tibble: 6 x 8
+##   term        estimate std.error statistic    p.value conf.low conf.high   tau
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1 (Intercept)   5.61     0.399       14.1  0           4.83       6.39     0.5
+## 2 suppins       0.277    0.0572       4.84 0.00000133  0.165      0.389    0.5
+## 3 totchr        0.394    0.0185      21.3  0           0.358      0.431    0.5
+## 4 age           0.0149   0.00469      3.17 0.00156     0.00566    0.0241   0.5
+## 5 female       -0.0881   0.0514      -1.71 0.0866     -0.189      0.0127   0.5
+## 6 white         0.536    0.211        2.55 0.0109      0.123      0.950    0.5</code></pre>
+<p>And we see that it produces a data frame woth the coefficient names along with the estimates and the quantile (<code>tau</code>).
+To do this for each of the five elements of the list, we will use <code>map()</code> to apply the <code>tidy()</code> function to each element of the list <code>qr_res</code>.
+<code>.x</code> tells <code>R</code> where to use the first argument of map function, which for us is the first argument of the <code>tidy()</code> command.
+This produces a list of dataframes, each formatted like the one above.
+To <em>unlist</em> these into one larger dataframe, use <code>bind_rows()</code> to flatten the list of dataframes.</p>
+<pre class="r"><code>qr_tidy &lt;- map(qr_res, ~tidy(.x, se = &quot;boot&quot;)) %&gt;%
+            bind_rows()</code></pre>
+<p>The result looks like:</p>
+<pre class="r"><code>head(qr_tidy, 10) # print first 10 rows
+## # A tibble: 10 x 8
+##    term       estimate std.error statistic      p.value conf.low conf.high   tau
+##    &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+##  1 (Intercep…   3.87     0.431       8.98       0.       3.02       4.71    0.1 
+##  2 suppins      0.396    0.0745      5.31       1.17e-7  0.250      0.542   0.1 
+##  3 totchr       0.539    0.0267     20.2        0.       0.487      0.592   0.1 
+##  4 age          0.0193   0.00541     3.56       3.78e-4  0.00865    0.0299  0.1 
+##  5 female      -0.0127   0.0776     -0.164      8.70e-1 -0.165      0.139   0.1 
+##  6 white        0.0734   0.192       0.383      7.02e-1 -0.303      0.450   0.1 
+##  7 (Intercep…   4.75     0.347      13.7        0.       4.07       5.43    0.25
+##  8 suppins      0.386    0.0634      6.09       1.27e-9  0.262      0.510   0.25
+##  9 totchr       0.459    0.0252     18.2        0.       0.410      0.509   0.25
+## 10 age          0.0155   0.00443     3.50       4.74e-4  0.00682    0.0242  0.25</code></pre>
+<p>We also tidy up the OLS estimation results so they have the same format.
+This is because we want to plot the OLS estimate too.
+Since there is only one set of estimates, we don’t need to worry about binding multiple sets of estimates together.</p>
+<pre class="r"><code>ols_tidy &lt;- tidy(ols_res)</code></pre>
+<pre class="r"><code>
+qr_tidy %&gt;%
+  ggplot(aes(x = tau,
+             y = estimate
+             )
+         ) + # the data we want to plot - in our case the tidied quantile regression output
+  geom_point(color = &quot;#27408b&quot;, 
+             size = 3
+             ) + # plots the coefficient estimates
+  geom_line(color=&quot;#27408b&quot;, 
+            size = 1
+            ) + # adds a line connecting the coefficient estimates
+  geom_errorbar(aes(
+    ymin = conf.low,
+    ymax = conf.high
+      ), 
+    width = 0.05,
+    size  = 0.3,
+    position = position_dodge(.9)
+    ) + # adds the confidence intervals as error bars
+  geom_hline(data = ols_tidy, 
+             aes(yintercept = estimate), 
+             color = &quot;red&quot;
+             ) + # add OLS estimate - note it is from another data set which is totally OK
+  facet_wrap(~term, 
+             scales=&quot;free&quot;, 
+             ncol=2
+             ) + # one plot per explanatory variable, subplots over 2 columns
+  theme_bw()</code></pre>
+<p><img src="/post/quantile-regression-with-map/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Now one could further format the plot by improving axes and subplot names - but we’ll leave this as it is.</p>
+</div>
+<div id="final-thoughts" class="section level2">
+<h2>Final Thoughts</h2>
+<p>The aim of this post was to be able to estimate quantile regressions across multiple quantiles and report the output in a presentable way.
+I’ve tackled this (mostly) using packages from within the <code>tidyverse</code>.
+Alternatively, one could stick within the a set of helper functions provided by <code>quantreg</code> (see the vignette <a href="https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf">here</a>)- but I’ve found what comes out harder to customize as I wanted.</p>
+</div>
+<div id="session-info" class="section level2">
+<h2>Session Info</h2>
+<pre class="r"><code>sessionInfo()
+## R version 3.6.3 (2020-02-29)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Pop!_OS 20.04 LTS
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
+## 
+## locale:
+##  [1] LC_CTYPE=en_AU.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_AU.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_AU.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] purrr_0.3.4   broom_0.5.6   quantreg_5.55 SparseM_1.78  ggplot2_3.3.0
+## [6] skimr_2.1.2   tidyr_1.1.0   dplyr_0.8.5   haven_2.2.0  
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.4.6       highr_0.8          pillar_1.4.4       compiler_3.6.3    
+##  [5] forcats_0.5.0      base64enc_0.1-3    tools_3.6.3        digest_0.6.25     
+##  [9] nlme_3.1-147       lattice_0.20-40    jsonlite_1.6.1     evaluate_0.14     
+## [13] lifecycle_0.2.0    tibble_3.0.1       gtable_0.3.0       pkgconfig_2.0.3   
+## [17] rlang_0.4.6        Matrix_1.2-18      cli_2.0.2          curl_4.3          
+## [21] yaml_2.2.1         blogdown_0.19      xfun_0.14          stargazer_5.2.2   
+## [25] repr_1.1.0         withr_2.2.0        stringr_1.4.0      knitr_1.28        
+## [29] generics_0.0.2     MatrixModels_0.4-1 vctrs_0.3.0        hms_0.5.3         
+## [33] grid_3.6.3         tidyselect_1.1.0   glue_1.4.1         R6_2.4.1          
+## [37] fansi_0.4.1        rmarkdown_2.3      bookdown_0.19      farver_2.0.3      
+## [41] readr_1.3.1        magrittr_1.5       backports_1.1.7    scales_1.1.1      
+## [45] ellipsis_0.3.1     htmltools_0.4.0    assertthat_0.2.1   colorspace_1.4-1  
+## [49] labeling_0.3       utf8_1.1.4         stringi_1.4.6      munsell_0.5.0     
+## [53] crayon_1.3.4</code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Note that if you read <code>quantreg</code>’s manual and vignettes one can estimate multiple quantile regressions by passing a vector to the <code>tau</code> argument. I’ve found working with the output using the <code>map()</code> method easier.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>
+The <code>modelsummary</code> package is currently my preferred method, but I had difficulty getting it to work with quantile regression output.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/r/">R</a>
+  
+  <a class="badge badge-light" href="/tag/purrr/">purrr</a>
+  
+  <a class="badge badge-light" href="/tag/regression/">regression</a>
+  
+  <a class="badge badge-light" href="/tag/tidyverse/">tidyverse</a>
+  
+  <a class="badge badge-light" href="/tag/quantreg/">quantreg</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/quantile-regression-with-map/&amp;text=Reporting%20Multiple%20Quantile%20Regression%20Estimates%20in%20the%20Tidyverse" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/quantile-regression-with-map/&amp;t=Reporting%20Multiple%20Quantile%20Regression%20Estimates%20in%20the%20Tidyverse" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Reporting%20Multiple%20Quantile%20Regression%20Estimates%20in%20the%20Tidyverse&amp;body=/post/quantile-regression-with-map/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/quantile-regression-with-map/&amp;title=Reporting%20Multiple%20Quantile%20Regression%20Estimates%20in%20the%20Tidyverse" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Reporting%20Multiple%20Quantile%20Regression%20Estimates%20in%20the%20Tidyverse%20/post/quantile-regression-with-map/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/quantile-regression-with-map/&amp;title=Reporting%20Multiple%20Quantile%20Regression%20Estimates%20in%20the%20Tidyverse" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/lachlan-deer/avatar_hu883af723293e9aa444f88a6ed2cae9d0_56212_270x270_fill_q90_lanczos_center.jpg" alt="Lachlan Deer">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Lachlan Deer</a></h5>
+        <h6 class="card-subtitle">Postdoctoral Fellow</h6>
+        <p class="card-text">My research interests include quantitative marketing, digital marketing and text as data.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/lachlandeer" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=peCaHWMAAAAJ" target="_blank" rel="noopener">
+        <i class="fas fa-graduation-cap"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/lachlandeer" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/lachlan-deer-59bb3559/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/media/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/post/2015-07-23-r-rmarkdown/">Hello R Markdown</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js" integrity="sha512-7t8APmYpzEsZP7CYoA7RfMPV9Bb+PJHa9x2WiUnDXZx3XHveuyWUtvNOexhkierl5flZ3tr92dP1mMS+SGlD+A==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.3b2b658c61ebd725bd5fc606c89fe44c.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="/terms/">Terms</a>
+    
+  </p>
+  
+
+  <p class="powered-by">
+    © 2020
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    Published with
+    <a href="https://wowchemy.com" target="_blank" rel="noopener">Wowchemy Website Builder</a>
+    
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
