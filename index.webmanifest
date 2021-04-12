@@ -2,8 +2,8 @@
   "name": "Lachlan Deer",
   "short_name": "Lachlan Deer",
   "lang": "en-us",
-  "theme_color": "#800000ff",
-  "background_color": "#800000ff",
+  "theme_color": "#003366",
+  "background_color": "#003366",
   "icons": [{
     "src": "/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_192x192_fill_lanczos_center_2.png",
     "sizes": "192x192",
