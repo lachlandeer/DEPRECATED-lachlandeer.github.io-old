@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>short-course | Lachlan Deer</title>
+    <link>/tag/short-course/</link>
+      <atom:link href="/tag/short-course/index.xml" rel="self" type="application/rss+xml" />
+    <description>short-course</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2023</copyright><lastBuildDate>Wed, 01 Mar 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>short-course</title>
+      <link>/tag/short-course/</link>
+    </image>
+    
+    <item>
+      <title>Using Text as Data in Empirical Economics Research</title>
+      <link>/teaching/short-text-che/</link>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>/teaching/short-text-che/</guid>
+      <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Adelaide Business School, Winter 2023&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Using Text as Data in Marketing Research</title>
+      <link>/teaching/short-text-adelaide/</link>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>/teaching/short-text-adelaide/</guid>
+      <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Adelaide Business School, Winter 2023&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

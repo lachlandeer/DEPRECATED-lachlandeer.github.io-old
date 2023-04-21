@@ -5,7 +5,7 @@
     <link>/teaching/</link>
       <atom:link href="/teaching/index.xml" rel="self" type="application/rss+xml" />
     <description>Teachings</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2021</copyright><lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2023</copyright><lastBuildDate>Wed, 01 Mar 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
       <title>Teachings</title>
@@ -13,19 +13,51 @@
     </image>
     
     <item>
+      <title>Digital and Social Media Strategies</title>
+      <link>/teaching/tilburg-dsms/</link>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>/teaching/tilburg-dsms/</guid>
+      <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Tilburg, Fall 2023&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Digital and Social Media Strategies introduces students to the fundamentals of the digital marketplace.
+The class is designed to familiarize students with the most important aspects of
+the main types of digital markets (such as advertising, online retail, search platforms, mobile marketing, and social media sites).
+Within each market we encounter, students will be introduced to the types of strategic questions marketers are working to answer and learn an analytics toolkit that they can employ to deliver the quantitative answers to inform strategic decision making.
+The approach of decision driven analytics taught in this class puts students at the forefront of how leading scholars&#39; and employers&#39; approach digital marketing, with a toolkit that can be utilized in future academic study, and when working in the private sector at firms of any size and scope.&lt;/p&gt;
+&lt;p&gt;The course is split into 5 blocks:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Prologue&lt;/strong&gt;: Refreshing statistical knowledge necessary for the class&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Digital Advertising&lt;/strong&gt;: Attribution, Media Mix Models, Ghost Ads, Search Engine Ads, Email Marketing&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Social Media&lt;/strong&gt;: User Generated Content, Word of Mouth, Virality, Influencers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Online Markets&lt;/strong&gt;: Mobile Marketing, Platforms, Online Retail&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advanced Topics&lt;/strong&gt;: Search Engine Optimization, Digital Privacy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;course-material&#34;&gt;Course Material&lt;/h2&gt;
+&lt;p&gt;I taught this class for the first time in Fall 2022, so the course notes are still a bit rough around the edges.&lt;/p&gt;
+&lt;p&gt;I plan to release lecture notes, and course assignments at the conclusion of the Fall 2023. If you are interested in an advanced copy, drop me an email and I can share with you my materials from the first run.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Social Media and Web Analytics</title>
       <link>/teaching/tilburg-smwa/</link>
-      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
       <guid>/teaching/tilburg-smwa/</guid>
       <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Tilburg, Spring 2021&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://tisem-digital-marketing.github.io/2021-smwa/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tilburg, Spring 2021&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://tisem-digital-marketing.github.io/2022-smwa/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tilburg, Spring 2022&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://tisem-digital-marketing.github.io/2023-smwa/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tilburg, Spring 2023&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;&amp;ldquo;Some 73% of online adults now use a social networking site of some kind&amp;hellip; [and] 42% of online adults now use multiple social networking sites,&amp;rdquo; according to a recent Pew Research survey.^[
-Pew Research, 2019, 
-&lt;a href=&#34;https://www.pewresearch.org/internet/fact-sheet/social-media/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Social Media Fact Sheet.&lt;/a&gt;
-]
+&lt;p&gt;&amp;ldquo;Some 73% of online adults now use a social networking site of some kind&amp;hellip; [and] 42% of online adults now use multiple social networking sites,&amp;rdquo; according to a recent 
+&lt;a href=&#34;https://www.pewresearch.org/internet/fact-sheet/social-media/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pew Research survey&lt;/a&gt;.
 If a business needs to be where its customers are, then establishing a strong presence on social media is a critical component of a modern marketing strategy.
 The goal of this course is to develop an understanding of the social media landscape from the point of view of a marketing analyst.
 To that end, we need to be able to answer the following questions:
@@ -47,6 +79,30 @@ As we progress through the course a heavy emphasis on analytical techniques - bo
 &lt;li&gt;&lt;strong&gt;Importance and Influence:&lt;/strong&gt; which discusses an individual&amp;rsquo;s place in the network, and how memes, early adoption, word of mouth and other &amp;lsquo;information cascades&amp;rsquo; propagate,&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Advertising and Marketing:&lt;/strong&gt; which focuses on viral marketing and social advertising techniques.&lt;/li&gt;
 &lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Using Text as Data in Empirical Economics Research</title>
+      <link>/teaching/short-text-che/</link>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>/teaching/short-text-che/</guid>
+      <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Adelaide Business School, Winter 2023&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Using Text as Data in Marketing Research</title>
+      <link>/teaching/short-text-adelaide/</link>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>/teaching/short-text-adelaide/</guid>
+      <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Adelaide Business School, Winter 2023&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     

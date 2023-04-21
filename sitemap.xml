@@ -33,53 +33,93 @@
   </url>
   
   <url>
-    <loc>/tag/social-media/</loc>
-    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/teaching/tilburg-smwa/</loc>
-    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/teaching/</loc>
-    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication-type/2/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/publication-type/3/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/authors/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/author/chih-sheng-hsieh/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/endog-riot-networks/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/author/fernando-vega-redondo/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/lachlan-deer/</loc>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/michael-koenig/</loc>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication_types/</loc>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/</loc>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/endog-riot-networks/</loc>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/working-paper/</loc>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/teaching/tilburg-dsms/</loc>
+    <lastmod>2023-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/digital-marketing/</loc>
+    <lastmod>2023-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/short-course/</loc>
+    <lastmod>2023-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/teaching/tilburg-smwa/</loc>
+    <lastmod>2023-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/teaching/</loc>
+    <lastmod>2023-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/teaching/short-text-che/</loc>
+    <lastmod>2023-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/teaching/short-text-adelaide/</loc>
+    <lastmod>2023-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -94,16 +134,6 @@
   
   <url>
     <loc>/tag/in-progress/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/lachlan-deer/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/michael-koenig/</loc>
     <lastmod>2020-12-31T00:00:00+00:00</lastmod>
   </url>
   
@@ -128,27 +158,12 @@
   </url>
   
   <url>
-    <loc>/publication_types/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tag/tv-advertising/</loc>
     <lastmod>2020-12-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tag/twitter/</loc>
-    <lastmod>2020-12-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tag/working-paper/</loc>
     <lastmod>2020-12-31T00:00:00+00:00</lastmod>
   </url>
   
@@ -255,6 +270,11 @@
   <url>
     <loc>/tag/workflow/</loc>
     <lastmod>2020-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication-type/2/</loc>
+    <lastmod>2019-12-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>

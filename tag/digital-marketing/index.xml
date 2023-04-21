@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Digital Marketing | Lachlan Deer</title>
+    <link>/tag/digital-marketing/</link>
+      <atom:link href="/tag/digital-marketing/index.xml" rel="self" type="application/rss+xml" />
+    <description>Digital Marketing</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2023</copyright><lastBuildDate>Wed, 01 Mar 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>Digital Marketing</title>
+      <link>/tag/digital-marketing/</link>
+    </image>
+    
+    <item>
+      <title>Digital and Social Media Strategies</title>
+      <link>/teaching/tilburg-dsms/</link>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>/teaching/tilburg-dsms/</guid>
+      <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Tilburg, Fall 2023&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Digital and Social Media Strategies introduces students to the fundamentals of the digital marketplace.
+The class is designed to familiarize students with the most important aspects of
+the main types of digital markets (such as advertising, online retail, search platforms, mobile marketing, and social media sites).
+Within each market we encounter, students will be introduced to the types of strategic questions marketers are working to answer and learn an analytics toolkit that they can employ to deliver the quantitative answers to inform strategic decision making.
+The approach of decision driven analytics taught in this class puts students at the forefront of how leading scholars&#39; and employers&#39; approach digital marketing, with a toolkit that can be utilized in future academic study, and when working in the private sector at firms of any size and scope.&lt;/p&gt;
+&lt;p&gt;The course is split into 5 blocks:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Prologue&lt;/strong&gt;: Refreshing statistical knowledge necessary for the class&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Digital Advertising&lt;/strong&gt;: Attribution, Media Mix Models, Ghost Ads, Search Engine Ads, Email Marketing&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Social Media&lt;/strong&gt;: User Generated Content, Word of Mouth, Virality, Influencers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Online Markets&lt;/strong&gt;: Mobile Marketing, Platforms, Online Retail&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advanced Topics&lt;/strong&gt;: Search Engine Optimization, Digital Privacy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;course-material&#34;&gt;Course Material&lt;/h2&gt;
+&lt;p&gt;I taught this class for the first time in Fall 2022, so the course notes are still a bit rough around the edges.&lt;/p&gt;
+&lt;p&gt;I plan to release lecture notes, and course assignments at the conclusion of the Fall 2023. If you are interested in an advanced copy, drop me an email and I can share with you my materials from the first run.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Social Media and Web Analytics</title>
+      <link>/teaching/tilburg-smwa/</link>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>/teaching/tilburg-smwa/</guid>
+      <description>&lt;h2 id=&#34;taught-at&#34;&gt;Taught at:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://tisem-digital-marketing.github.io/2021-smwa/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tilburg, Spring 2021&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://tisem-digital-marketing.github.io/2022-smwa/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tilburg, Spring 2022&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://tisem-digital-marketing.github.io/2023-smwa/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tilburg, Spring 2023&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;&amp;ldquo;Some 73% of online adults now use a social networking site of some kind&amp;hellip; [and] 42% of online adults now use multiple social networking sites,&amp;rdquo; according to a recent 
+&lt;a href=&#34;https://www.pewresearch.org/internet/fact-sheet/social-media/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pew Research survey&lt;/a&gt;.
+If a business needs to be where its customers are, then establishing a strong presence on social media is a critical component of a modern marketing strategy.
+The goal of this course is to develop an understanding of the social media landscape from the point of view of a marketing analyst.
+To that end, we need to be able to answer the following questions:
+How does one develop an online reputation or develop their brand online?
+How does one maintain a strong user community on social networking sites?
+How can one craft a potent social advertising strategy?
+What are the potential pitfalls?
+How does one quantitatively assess whether their online reputation is positive and/or improving, or whether their social marketing is effective?&lt;/p&gt;
+&lt;p&gt;To answer these questions, we must synthesize knowledge from a variety of disciplines.
+Sociologists have researched such concepts as homophily and social capital, which point to the underlying motivations in the relationships of individuals in a social network,
+computer scientists have uncovered surprising patterns in real-world social networks,
+and marketing experts have studied how network structure influences consumer demand, what makes ads go &amp;lsquo;viral&amp;rsquo; and aspects of social advertising.
+This course will combine this foundational material with actual case studies of businesses in the social world to build an understanding of modern social media marketing.
+As we progress through the course a heavy emphasis on analytical techniques - both statistical and theoretical - will guide our understanding and allow us to draw conclusions from data to answer the questions posed above.&lt;/p&gt;
+&lt;p&gt;The course is split into four modules:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Network Patterns:&lt;/strong&gt; which seeks to describes and explain several common patterns found in real-world social networks,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Branding and Community:&lt;/strong&gt; which explores the best practice methods for maintaining a strong brand online and managing the user community,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Importance and Influence:&lt;/strong&gt; which discusses an individual&amp;rsquo;s place in the network, and how memes, early adoption, word of mouth and other &amp;lsquo;information cascades&amp;rsquo; propagate,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advertising and Marketing:&lt;/strong&gt; which focuses on viral marketing and social advertising techniques.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
