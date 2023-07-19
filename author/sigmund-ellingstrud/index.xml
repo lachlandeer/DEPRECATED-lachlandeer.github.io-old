@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sigmund Ellingstrud | Lachlan Deer</title>
+    <link>/author/sigmund-ellingstrud/</link>
+      <atom:link href="/author/sigmund-ellingstrud/index.xml" rel="self" type="application/rss+xml" />
+    <description>Sigmund Ellingstrud</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2023</copyright><lastBuildDate>Tue, 28 Feb 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
+      <title>Sigmund Ellingstrud</title>
+      <link>/author/sigmund-ellingstrud/</link>
+    </image>
+    
+    <item>
+      <title>Replication Report: Concentration Bias in Intertemporal Choice</title>
+      <link>/publication/rr-intertemporalchoice/</link>
+      <pubDate>Tue, 28 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/publication/rr-intertemporalchoice/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

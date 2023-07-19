@@ -246,44 +246,6 @@
 
 
 
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-69926847-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-      dataLayer.push(arguments);
-  }
-
-  function trackOutboundLink(url, target) {
-    gtag('event', 'click', {
-         'event_category': 'outbound',
-         'event_label': url,
-         'transport_type': 'beacon',
-         'event_callback': function () {
-           if (target !== '_blank') {
-             document.location = url;
-           }
-         }
-    });
-    console.debug("Outbound link clicked: " + url);
-  }
-
-  function onClickCallback(event) {
-    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
-      return;
-    }
-    trackOutboundLink(event.target, event.target.getAttribute('target'));  
-  }
-
-  gtag('js', new Date());
-  gtag('config', 'UA-69926847-1', {});
-
-  
-  document.addEventListener('click', onClickCallback, false);
-</script>
-
-
   
 
 
@@ -1248,6 +1210,8 @@
       <li><a href="/publication/psb-ads/">The Regulation of Public Service Broadcasters - Should there be more advertising on television?</a></li>
       
       <li><a href="/publication/endog-riot-networks/">Riot Networks and the Tullock Paradox: An application to the Egyptian Arab Spring</a></li>
+      
+      <li><a href="/publication/rr-intertemporalchoice/">Replication Report: Concentration Bias in Intertemporal Choice</a></li>
       
     </ul>
   </div>

@@ -246,44 +246,6 @@
 
 
 
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-69926847-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-      dataLayer.push(arguments);
-  }
-
-  function trackOutboundLink(url, target) {
-    gtag('event', 'click', {
-         'event_category': 'outbound',
-         'event_label': url,
-         'transport_type': 'beacon',
-         'event_callback': function () {
-           if (target !== '_blank') {
-             document.location = url;
-           }
-         }
-    });
-    console.debug("Outbound link clicked: " + url);
-  }
-
-  function onClickCallback(event) {
-    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
-      return;
-    }
-    trackOutboundLink(event.target, event.target.getAttribute('target'));  
-  }
-
-  gtag('js', new Date());
-  gtag('config', 'UA-69926847-1', {});
-
-  
-  document.addEventListener('click', onClickCallback, false);
-</script>
-
-
   
 
 
@@ -1167,6 +1129,87 @@
           
 
 
+<div class="col-12 isotope-item js-id-In-Progress">
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="view-list-item">
+  <i class="far fa-file-alt pub-icon" aria-hidden="true"></i>
+  <a href="/publication/r-u-okay/" >Are You Okay? The Effect of a National Peer-based Support Campaign on Mental Wellbeing and Suicide</a>
+
+  
+
+  
+  <div class="article-metadata">
+    
+
+  
+  <span >Nicole Black</span>, <span ><a href="/author/lachlan-deer/">Lachlan Deer</a></span>, <span >David Johnston</span>, <span >Johannes Kunz</span>
+  </div>
+  
+
+  
+  <div class="btn-links">
+    
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  
+
+</div>
+
+</div>
+
+        
+
+      
+
+        
+        
+        
+
+        
+          
+
+
 <div class="col-12 isotope-item js-id-Working-Paper">
   
 
@@ -1226,6 +1269,106 @@
   Cite
 </button>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  
+
+</div>
+
+</div>
+
+        
+
+      
+
+        
+        
+        
+
+        
+          
+
+
+<div class="col-12 isotope-item js-id-Working-Paper js-id-Replication js-id-Replication-Report">
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="view-list-item">
+  <i class="far fa-file-alt pub-icon" aria-hidden="true"></i>
+  <a href="/publication/rr-intertemporalchoice/" >Replication Report: Concentration Bias in Intertemporal Choice</a>
+
+  
+
+  
+  <div class="article-metadata">
+    
+
+  
+  <span ><a href="/author/lachlan-deer/">Lachlan Deer</a></span>, <span >Sigmund Ellingstrud</span>, <span >Amund H. Kordt</span>, <span >Felix Heuer</span>
+  </div>
+  
+
+  
+  <div class="btn-links">
+    
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+<a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="https://www.econstor.eu/bitstream/10419/272844/1/I4R-DP042.pdf" target="_blank" rel="noopener">
+  PDF
+</a>
+
+
+
+<button type="button" class="btn btn-outline-primary my-1 mr-1 btn-sm js-cite-modal"
+        data-filename="/publication/rr-intertemporalchoice/cite.bib">
+  Cite
+</button>
+
+
+  
+  
+    
+  
+<a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="https://osf.io/d42xr/" target="_blank" rel="noopener">
+  Code
+</a>
 
 
 

@@ -246,44 +246,6 @@
 
 
 
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-69926847-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-      dataLayer.push(arguments);
-  }
-
-  function trackOutboundLink(url, target) {
-    gtag('event', 'click', {
-         'event_category': 'outbound',
-         'event_label': url,
-         'transport_type': 'beacon',
-         'event_callback': function () {
-           if (target !== '_blank') {
-             document.location = url;
-           }
-         }
-    });
-    console.debug("Outbound link clicked: " + url);
-  }
-
-  function onClickCallback(event) {
-    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
-      return;
-    }
-    trackOutboundLink(event.target, event.target.getAttribute('target'));  
-  }
-
-  gtag('js', new Date());
-  gtag('config', 'UA-69926847-1', {});
-
-  
-  document.addEventListener('click', onClickCallback, false);
-</script>
-
-
   
 
 
@@ -755,6 +717,8 @@
     
       <li><a href="/talk/example/">Example Talk</a></li>
     
+      <li><a href="/publication/r-u-okay/">Are You Okay? The Effect of a National Peer-based Support Campaign on Mental Wellbeing and Suicide</a></li>
+    
       <li><a href="/publication/endog-riot-networks/">Riot Networks and the Tullock Paradox: An application to the Egyptian Arab Spring</a></li>
     
       <li><a href="/teaching/tilburg-dsms/">Digital and Social Media Strategies</a></li>
@@ -765,9 +729,7 @@
     
       <li><a href="/teaching/short-text-adelaide/">Using Text as Data in Marketing Research</a></li>
     
-      <li><a href="/publication/ads-tweets-movies/">How does Advertising Influence Online Word of Mouth? Evidence from Twitter</a></li>
-    
-      <li><a href="/publication/online-wom-new-product-performance/">Online Word of Mouth and the Performance of New Products</a></li>
+      <li><a href="/publication/rr-intertemporalchoice/">Replication Report: Concentration Bias in Intertemporal Choice</a></li>
     
   </ul>
   
