@@ -5,12 +5,20 @@
     <link>/tag/working-paper/</link>
       <atom:link href="/tag/working-paper/index.xml" rel="self" type="application/rss+xml" />
     <description>Working Paper</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2023</copyright><lastBuildDate>Thu, 20 Apr 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2023</copyright><lastBuildDate>Tue, 12 Sep 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
       <title>Working Paper</title>
       <link>/tag/working-paper/</link>
     </image>
+    
+    <item>
+      <title>Are You Okay? The Effect of a National Peer-based Support Campaign on Mental Wellbeing and Suicide</title>
+      <link>/publication/r-u-okay/</link>
+      <pubDate>Tue, 12 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>/publication/r-u-okay/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Riot Networks and the Tullock Paradox: An application to the Egyptian Arab Spring</title>
