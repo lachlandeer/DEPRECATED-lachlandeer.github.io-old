@@ -5,9 +5,9 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Lachlan Deer</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2024</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2023</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_3.png</url>
+      <url>/images/icon_hu61be7568b0df3ea5cd01a08eb17368f6_79207_512x512_fill_lanczos_center_2.png</url>
       <title>Lachlan Deer</title>
       <link>/</link>
     </image>
@@ -106,7 +106,7 @@
 The class is designed to familiarize students with the most important aspects of
 the main types of digital markets (such as advertising, online retail, search platforms, mobile marketing, and social media sites).
 Within each market we encounter, students will be introduced to the types of strategic questions marketers are working to answer and learn an analytics toolkit that they can employ to deliver the quantitative answers to inform strategic decision making.
-The approach of decision driven analytics taught in this class puts students at the forefront of how leading scholars&amp;rsquo; and employers&amp;rsquo; approach digital marketing, with a toolkit that can be utilized in future academic study, and when working in the private sector at firms of any size and scope.&lt;/p&gt;
+The approach of decision driven analytics taught in this class puts students at the forefront of how leading scholars&#39; and employers&#39; approach digital marketing, with a toolkit that can be utilized in future academic study, and when working in the private sector at firms of any size and scope.&lt;/p&gt;
 &lt;p&gt;The course is split into 5 blocks:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;Prologue&lt;/strong&gt;: Refreshing statistical knowledge necessary for the class&lt;/li&gt;
@@ -796,11 +796,11 @@ The &lt;code&gt;modelsummary&lt;/code&gt; package is currently my preferred meth
 &lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
 &lt;p&gt;Much of a researchers live in modern economic research is spent in front of a computer &amp;ndash; be it to analyze data or to simulate economic models.&lt;/p&gt;
 &lt;p&gt;Unfortunately, it is rare that we have been taught how to do this in a structured and efficient way.
-Class exposure to programming languages is most often limited to the simple use of Stata and Matlab to solve `toy&amp;rsquo; examples designed to illustrate a theoretical result or implement a method with known properties and ex-ante known results.
+Class exposure to programming languages is most often limited to the simple use of Stata and Matlab to solve `toy&#39; examples designed to illustrate a theoretical result or implement a method with known properties and ex-ante known results.
 These skills, like copy and pasting pieces of code repeatedly, do not scale up in a straightforward manner to handle complex projects that make up research papers, PhD theses or typical work in government or private business settings.
 As a result, young economic researchers spend too much time wrestling with software and too little time doing economics &amp;ndash; our comparative advantage.
 Even with large investments in software wrestling and self-learned skills, we typically have no idea how reliable or efficient our programs are.
-This course is designed to improve learners&amp;rsquo; programming abilities.
+This course is designed to improve learners&#39; programming abilities.
 It is aimed at PhD students who expect to write their theses in a field that requires modest to heavy use of computation.
 Examples include applied microeconomics, econometrics, macroeconomics, computational economics and any field that either involves real-world data or does not generally lead to models with simple closed-form solutions.
 The course introduces students to a set of industry standard tools and programming methods that aim to reduce time spent programming while at the same time making programs more dependable and results reproducible.
@@ -960,15 +960,15 @@ $$&lt;/p&gt;
 {{% fragment %}} Three {{% /fragment %}}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Press &lt;code&gt;Space&lt;/code&gt; to play!&lt;/p&gt;
-&lt;span class=&#34;fragment &#34; &gt;
-   One 
+&lt;p&gt;&lt;span class=&#34;fragment &#34; &gt;
+One
 &lt;/span&gt;
 &lt;span class=&#34;fragment &#34; &gt;
-   **Two** 
+&lt;strong&gt;Two&lt;/strong&gt;
 &lt;/span&gt;
 &lt;span class=&#34;fragment &#34; &gt;
-   Three 
-&lt;/span&gt;
+Three
+&lt;/span&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;A fragment can accept two optional parameters:&lt;/p&gt;
 &lt;ul&gt;
